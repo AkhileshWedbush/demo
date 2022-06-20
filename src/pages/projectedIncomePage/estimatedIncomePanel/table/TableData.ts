@@ -1,0 +1,38 @@
+export const EstimatedIncomeData = [
+  {
+    col1: '...',
+    col2: 'VOO',
+    col3: '$6.34',
+    col4: '3/23/2022',
+    col5: 'Quarterly',
+    col6: 'No',
+    col7: 'Yes',
+  },
+  {
+    col1: '...',
+    col2: 'BAC',
+    col3: '$6.34',
+    col4: '3/23/2022',
+    col5: 'Quarterly',
+    col6: 'No',
+    col7: 'Yes',
+  },
+  {
+    col1: '...',
+    col2: 'DIA',
+    col3: '$6.34',
+    col4: '3/23/2022',
+    col5: 'Quarterly',
+    col6: 'No',
+    col7: 'Yes',
+  },
+  {
+    col1: '...',
+    col2: 'VOO',
+    col3: '$6.34',
+    col4: '3/23/2022',
+    col5: 'Quarterly',
+    col6: 'No',
+    col7: 'Yes',
+  },
+]

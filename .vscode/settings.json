@@ -1,0 +1,5 @@
+{
+  "cSpell.words": ["Clientlink", "lightcoral", "miragejs"],
+  "appService.defaultWebAppToDeploy": "/subscriptions/131ebe4f-30b2-49ab-b36b-823f3866c1c2/resourceGroups/appsvc_windows_centralus/providers/Microsoft.Web/sites/wb-clientlink",
+  "appService.deploySubpath": "build"
+}
