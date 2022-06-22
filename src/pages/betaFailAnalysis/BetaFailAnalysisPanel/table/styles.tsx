@@ -7,7 +7,6 @@ export const RootContainer = styled.div`
     /* background-color: green; */
 
     th {
-      margin: 0px 0px;
       font-style: normal;
       font-weight: 700;
       font-size: 12px;
@@ -30,7 +29,7 @@ export const RootContainer = styled.div`
 
     tr {
       td {
-        padding: 8px 0px;
+        padding: 8px 9px;
 
         font-style: normal;
         font-weight: 400;

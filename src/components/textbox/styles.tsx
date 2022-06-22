@@ -8,7 +8,7 @@ export const Wrapper = styled.div`
   border-radius: 8px;
 `
 export const Main = styled.input`
-  padding: 0.75rem 1.2mm;
+  padding: 0.75rem 1rem;
   flex: 0 1 100%;
   background: ${Backgrounds.White};
   border: 1px solid ${BorderColors.Gray50};
