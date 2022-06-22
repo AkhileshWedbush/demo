@@ -42,7 +42,7 @@ const BetaFailAnalysisPanel = () => {
     branch: '',
     accountNumber: '',
   })
-  const options: any = [
+  const ageOptions: any = [
     { value: '1', label: '1' },
     { value: '2_5', label: '2 to 5' },
     { value: '6_30', label: '6 to 30' },
@@ -64,7 +64,7 @@ const BetaFailAnalysisPanel = () => {
     console.log(table)
   }
 
-  const EditableCells = (tb: any) => {
+  const comments = (tb: any) => {
     return (
       <form>
         <textarea
@@ -84,7 +84,7 @@ const BetaFailAnalysisPanel = () => {
     table[rowID].comments = ''
     setTable([...table])
   }
-  const EditableCell = (tb: any) => {
+  const addNotes = (tb: any) => {
     return (
       <div>
         <Textbox
@@ -147,14 +147,14 @@ const BetaFailAnalysisPanel = () => {
     type.value === 'Daily'
       ? {
           Header: 'Comments',
-          Cell: EditableCells,
+          Cell: comments,
         }
-      : { Header: 'comment', Cell: EditableCells },
+      : { Header: 'comment', Cell: comments },
 
     type.value === 'Daily'
       ? {
           Header: 'Add Notes',
-          Cell: EditableCell,
+          Cell: addNotes,
         }
       : { Header: '', accessor: ' ' },
   ]
@@ -217,7 +217,7 @@ const BetaFailAnalysisPanel = () => {
               <Select
                 className="betadrop"
                 id="selectDrop"
-                options={options}
+                options={ageOptions}
                 value={ageRange}
                 onChange={(e: any) => {
                   setAgeRange(e)
