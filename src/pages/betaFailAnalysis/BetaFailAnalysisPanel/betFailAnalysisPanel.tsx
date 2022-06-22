@@ -1,5 +1,3 @@
-/* eslint-disable react-hooks/rules-of-hooks */
-/* eslint-disable prefer-spread */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CardContainer,
@@ -11,7 +9,7 @@ import {
   StyledSelectWrapper,
 } from './styles'
 import './table/style.css'
-import {  useState } from 'react'
+import { useState } from 'react'
 import Select from 'react-select'
 import { Textbox } from '../../../components/textbox/Textbox'
 import Button from '../../../components/button/Button'
@@ -72,21 +70,10 @@ const BetaFailAnalysisPanel = () => {
         <textarea
           disabled
           style={{ resize: 'none' }}
-          rows={3}
+          rows={5}
           cols={20}
           value={table[tb.cell.row.id].userComment}
         ></textarea>
-      </form>
-    )
-  }
-  const EditableCell = (tb: any) => {
-    return (
-      <form>
-        <Textbox
-          onChange={(e: any) => {
-            onchange(e, tb.cell.row.id)
-          }}
-        ></Textbox>
       </form>
     )
   }
@@ -97,20 +84,33 @@ const BetaFailAnalysisPanel = () => {
     table[rowID].comments = ''
     setTable([...table])
   }
-  const EditableCellButton = (tb: any) => {
+  const EditableCell = (tb: any) => {
     return (
-      <div style={{ padding: '10px' }}>
-        <Button
-          bgColor="#1F5EB7"
-          color="#FFFFFF"
-          height="35px"
-          width="80px"
-          onClick={() => {
-            console.log(table[tb.cell.row.id].comments)
-            appendToTextBox(tb.cell.row.id, table[tb.cell.row.id].comments)
+      <div>
+        <Textbox
+          onChange={(e: any) => {
+            onchange(e, tb.cell.row.id)
           }}
-          title="Submit"
-        />
+        ></Textbox>
+        <div
+          style={{
+            paddingTop: '10px',
+            display: 'flex',
+            justifyContent: 'flex-end',
+          }}
+        >
+          <Button
+            bgColor="#1F5EB7"
+            color="#FFFFFF"
+            height="35px"
+            width="80px"
+            onClick={() => {
+              console.log(table[tb.cell.row.id].comments)
+              appendToTextBox(tb.cell.row.id, table[tb.cell.row.id].comments)
+            }}
+            title="Submit"
+          />
+        </div>
       </div>
     )
   }
@@ -129,20 +129,6 @@ const BetaFailAnalysisPanel = () => {
       accessor: 'col4',
     },
     {
-      Header: 'Comments',
-      Cell: EditableCells,
-    },
-
-    {
-      Header: 'Add Notes',
-      Cell: EditableCell,
-    },
-
-    {
-      Header: 'Submit',
-      Cell: EditableCellButton,
-    },
-    {
       Header: 'Quantity',
       accessor: 'col5',
     },
@@ -158,10 +144,20 @@ const BetaFailAnalysisPanel = () => {
       Header: 'Amount',
       accessor: 'col8',
     },
-    {
-      Header: 'k',
-      accessor: 'col9',
-    },
+    type.value === 'Daily'
+    ? {
+        Header: 'Comments',
+        Cell: EditableCells,
+      }
+    : { Header: 'comment', Cell: EditableCells },
+
+  type.value === 'Daily'
+    ? {
+        Header: 'Add Notes',
+        Cell: EditableCell,
+      }
+    : { Header: '', accessor: ' ' },
+
   ]
 
   return (
@@ -169,13 +165,12 @@ const BetaFailAnalysisPanel = () => {
       <RootContainer>
         <StyledPanelHead>
           <StyledPanelHeadTitle>
-            {Comment && <>{table[0].comments}</>}
             <h3>BETA Fail Analysis</h3>
           </StyledPanelHeadTitle>
         </StyledPanelHead>
         <StyledPanelMonthSelect>
-        <StyledSelectWrapper>
-        <div className='wd230'>
+          <StyledSelectWrapper>
+            <div className="wd230">
               <Label color={'black'} label={'Type'}></Label>
               <Select
                 className="betadrop"
@@ -187,10 +182,15 @@ const BetaFailAnalysisPanel = () => {
                 }}
               />
             </div>
-            </StyledSelectWrapper>
+          </StyledSelectWrapper>
           <StyledSelectWrapper>
-           <div className='wd230'>
-              <Label color={'black'} label={type.value === 'Historical' ? 'Start Date' : 'Enter Date'}></Label>
+            <div className="wd230">
+              <Label
+                color={'black'}
+                label={
+                  type.value === 'Historical' ? 'Start Date' : 'Enter Date'
+                }
+              ></Label>
               <Textbox
                 type="date"
                 max={new Date().toISOString().split('T')[0]}
@@ -200,18 +200,20 @@ const BetaFailAnalysisPanel = () => {
                 }}
               />
             </div>
-           { type.value === 'Historical' && <div className='wd230'>
-              <Label color={'black'} label={'End Date'}></Label>
-              <Textbox
-                type="date"
-                min={input.startDate}
-                max={new Date().toISOString().split('T')[0]}
-                onChange={(e: any) => {
-                  setInput({ ...input, endDate: e.target.value })
-                }}
-              />
-            </div> }
-            <div className='wd230'>
+            {type.value === 'Historical' && (
+              <div className="wd230">
+                <Label color={'black'} label={'End Date'}></Label>
+                <Textbox
+                  type="date"
+                  min={input.startDate}
+                  max={new Date().toISOString().split('T')[0]}
+                  onChange={(e: any) => {
+                    setInput({ ...input, endDate: e.target.value })
+                  }}
+                />
+              </div>
+            )}
+            <div className="wd230">
               <Label color={'black'} label={'Age Range'}></Label>
               <Select
                 className="betadrop"
@@ -223,7 +225,7 @@ const BetaFailAnalysisPanel = () => {
                 }}
               />
             </div>
-            <div className='wd230'>
+            <div className="wd230">
               <Label color={'black'} label={'Buy/Sell'}></Label>
               <Select
                 className="betadrop"
