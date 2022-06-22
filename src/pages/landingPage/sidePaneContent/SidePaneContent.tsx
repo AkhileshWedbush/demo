@@ -21,7 +21,7 @@ const SidePaneContent = (Props: SidePaneContentProps) => {
   const isMenuOpen = Props.isSideMenuOpen
 
   const imageSrc = isMenuOpen
-    ? Icons.WedbushLogoSmall
+    ? Icons.Wedbushlogo
     : Icons.WedbushLogoOnlySmall
 
   return (

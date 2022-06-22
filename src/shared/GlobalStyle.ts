@@ -29,7 +29,7 @@ import Decrease from '../assets/icons/Decrease.png'
 import UploadInactive from '../assets/icons/size16/UploadInactive.png'
 import UploadActive from '../assets/icons/size16/UploadActive.png'
 import WedbushClientLink from '../assets/images/ArtBoard.png'
-
+import Wedbushlogo from '../assets/icons/size16/Wedbushlogo.png'
 export const Icons = {
   WedbushClientLink,
   WedbushLogo,
@@ -62,6 +62,7 @@ export const Icons = {
   Decrease,
   UploadInactive,
   UploadActive,
+  Wedbushlogo,
 }
 
 // import Accounts16 from '../assets/icons/size16/Accounts16.png'

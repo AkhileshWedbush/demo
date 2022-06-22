@@ -15,15 +15,7 @@ export interface SiteMenuItem {
 }
 
 export const SiteMenuList = [
-  {
-    id: 'Profile',
-    name: 'John Smith',
-    src: Icons.Profile,
-    alt: 'Settings icon',
-    category: 'profile',
-    hasSubMenu: false,
-    dropdownItem: [],
-  },
+
   {
     id: 'Settlement',
     name: 'Settlement',
