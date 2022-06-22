@@ -38,7 +38,7 @@ const BetaFailAnalysisPanel = () => {
     startDate: new Date().toISOString().split('T')[0],
     endDate: '',
     cusip: '',
-    SubsidiaryNumber: '',
+    subsidiaryNumber: '',
     branch: '',
     accountNumber: '',
   })
@@ -145,19 +145,18 @@ const BetaFailAnalysisPanel = () => {
       accessor: 'col8',
     },
     type.value === 'Daily'
-    ? {
-        Header: 'Comments',
-        Cell: EditableCells,
-      }
-    : { Header: 'comment', Cell: EditableCells },
+      ? {
+          Header: 'Comments',
+          Cell: EditableCells,
+        }
+      : { Header: 'comment', Cell: EditableCells },
 
-  type.value === 'Daily'
-    ? {
-        Header: 'Add Notes',
-        Cell: EditableCell,
-      }
-    : { Header: '', accessor: ' ' },
-
+    type.value === 'Daily'
+      ? {
+          Header: 'Add Notes',
+          Cell: EditableCell,
+        }
+      : { Header: '', accessor: ' ' },
   ]
 
   return (
@@ -243,7 +242,7 @@ const BetaFailAnalysisPanel = () => {
               <Textbox
                 placeholder="Account Number"
                 onChange={(e: any) => {
-                  setInput({ ...input, AccountNumber: e.target.value })
+                  setInput({ ...input, accountNumber: e.target.value })
                 }}
               />
             </div>
