@@ -63,8 +63,21 @@ const BetaFailAnalysisPanel = () => {
     setTable(table)
     console.log(table)
   }
+  const histocialComments = (tb: any) => {
+    return (
+      <form>
+        <textarea
+          disabled
+          style={{ resize: 'none' }}
+          rows={5}
+          cols={25}
+          value={table[tb.cell.row.id].col9}
+        ></textarea>
+      </form>
+    )
+  }
 
-  const comments = (tb: any) => {
+  const dailyComments = (tb: any) => {
     return (
       <form>
         <textarea
@@ -147,9 +160,9 @@ const BetaFailAnalysisPanel = () => {
     type.value === 'Daily'
       ? {
           Header: 'Comments',
-          Cell: comments,
+          Cell: dailyComments,
         }
-      : { Header: 'comment', Cell: comments },
+      : { Header: 'comment', Cell: histocialComments },
 
     type.value === 'Daily'
       ? {

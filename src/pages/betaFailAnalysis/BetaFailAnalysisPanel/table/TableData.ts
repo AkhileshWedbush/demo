@@ -10,7 +10,7 @@ export const AccountActivityData = [
     col6: 'AMZN',
     col7: 'Amazon.com, inc',
     col8: '11.02',
-    col9: ' ',
+    col9: 'demo comment 1 ',
   },
   {
     col1: '...',
@@ -21,8 +21,9 @@ export const AccountActivityData = [
     col6: 'CHY',
     col7: 'Calamos Convertible High Income Funds',
     col8: '11.02',
-    col9: ' ',
+    col9: 'demo comment 2 '
   },
+
   {
     col1: '...',
     col2: '3/24/2022',
@@ -32,7 +33,7 @@ export const AccountActivityData = [
     col6: 'AMZN',
     col7: 'Amazon.com, inc',
     col8: '11.02',
-    col9: ' ',
+    col9: 'demo comment 3 ',
   },
   {
     col1: '...',
@@ -43,7 +44,7 @@ export const AccountActivityData = [
     col6: 'CHY',
     col7: 'Calamos Convertible High Income Funds',
     col8: '11.02',
-    col9: ' ',
+    col9: ' demo comment 4',
   },
   {
     col1: '...',
@@ -53,7 +54,7 @@ export const AccountActivityData = [
     col5: '10',
     col6: 'AMZN',
     col7: 'Amazon.com, inc',
-    col9: ' ',
+    col9: 'demo comment 5 ',
   },
   {
     col1: '...',
@@ -64,7 +65,7 @@ export const AccountActivityData = [
     col6: 'CHY',
     col7: 'Calamos Convertible High Income Funds',
     col8: '11.02',
-    col9: ' ',
+    col9: 'demo comment 6 ',
   },
   {
     col1: '...',
@@ -74,7 +75,7 @@ export const AccountActivityData = [
     col5: '10',
     col6: 'AMZN',
     col7: 'Amazon.com, inc',
-    col9: ' ',
+    col9: ' demo comment 7',
   },
   {
     col1: '...',
@@ -85,7 +86,7 @@ export const AccountActivityData = [
     col6: 'CHY',
     col7: 'Calamos Convertible High Income Funds',
     col8: '11.02',
-    col9: '',
+    col9: 'demo comment 8',
   },
   {
     col1: '...',
