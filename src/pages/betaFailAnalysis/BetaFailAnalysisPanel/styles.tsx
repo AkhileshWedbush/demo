@@ -104,8 +104,6 @@ export const StyledTableContainer = styled.div`
   border: 1px solid #d0d7e2;
   box-sizing: border-box;
   overflow-x:scroll; 
-
-overflow-y:scroll; 
   box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);
   border-radius: 8px 8px 8px 8px;
 `

@@ -19,7 +19,7 @@ export const SiteMenuList = [
   {
     id: 'Settlement',
     name: 'Settlement',
-    src: Icons.Accounts,
+    src: Icons.Document,
     alt: 'Settings icon',
     category: 'default',
     hasSubMenu: true,
