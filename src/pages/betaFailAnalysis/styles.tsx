@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const RootContainer = styled.div`
   flex: 1;
+  width: 0px;
   display: flex;
   flex-direction: column;
   justify-content: flex-start;

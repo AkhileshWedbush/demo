@@ -4,9 +4,12 @@ export const RootContainer = styled.div`
   /* background-color: pink; */
   table {
     width: 100%;
+   
+    
     /* background-color: green; */
 
     th {
+      white-space: nowrap;
       font-style: normal;
       font-weight: 700;
       font-size: 12px;

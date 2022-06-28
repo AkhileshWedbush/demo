@@ -8,8 +8,24 @@ export const RootContainer = styled.div`
   justify-content: center;
   align-items: center;
 
+
   /* background-color: orange; */
 `
+export const StyledPanelSelect = styled.div`
+  width: 100%;
+  padding: 24px 32px 24px 32px;
+  border-radius: 0px 0px 8px 8px;
+  font-style: normal;
+  font-weight: 400;
+  font-size: 16px;
+  line-height: 24px;
+  /* text-align: right; */
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-start;
+  align-items:flex-start;
+  background: #fcfdff;
+  `
 
 export const StyledPanelHead = styled.div`
   width: 100%;
@@ -84,11 +100,12 @@ export const StyledTableContainer = styled.div`
   width: 100%;
     margin-top:20px;
   padding: 24px;
-  background: #fcfdff;
-
+  background: #fcfdff; 
   border: 1px solid #d0d7e2;
   box-sizing: border-box;
+  overflow-x:scroll; 
 
+overflow-y:scroll; 
   box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);
   border-radius: 8px 8px 8px 8px;
 `
