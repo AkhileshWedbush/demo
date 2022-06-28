@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CardContainer,
@@ -5,7 +6,7 @@ import {
   StyledPanelHead,
   StyledPanelHeadTitle,
   StyledTableContainer,
-  StyledPanelMonthSelect,
+  StyledPanelSelect,
   StyledSelectWrapper,
 } from './styles'
 import './table/style.css'
@@ -14,12 +15,13 @@ import Select from 'react-select'
 import { Textbox } from '../../../components/textbox/Textbox'
 import Button from '../../../components/button/Button'
 import { AccountActivityData } from './table/TableData'
-
 import AccountActivityTable from './table/AccountActivityTable'
-
 import Label from '../../../components/label/Label'
+import { getReturnMailAndEmailReport } from '../../../store/failAnalysis/beta-fail-analysis'
+import { useDispatch } from 'react-redux'
 
 const BetaFailAnalysisPanel = () => {
+  const dispatch = useDispatch()
   const [table, setTable] = useState<any>(AccountActivityData)
   const [loading, setLoading] = useState<boolean>(false)
   const [ageRange, setAgeRange] = useState<any>({
@@ -34,7 +36,7 @@ const BetaFailAnalysisPanel = () => {
     value: 'Null',
     label: 'Null',
   })
-  const [input, setInput] = useState<any>({
+  let [input, setInput] = useState({
     startDate: new Date().toISOString().split('T')[0],
     endDate: '',
     cusip: '',
@@ -57,6 +59,9 @@ const BetaFailAnalysisPanel = () => {
     { value: 'S', label: 'Sell' },
     { value: 'B', label: 'Buy' },
   ]
+      
+  
+
 
   const onchange = (e: any, rowId: number) => {
     table[rowId].comments = e.target.value
@@ -71,7 +76,7 @@ const BetaFailAnalysisPanel = () => {
           style={{ resize: 'none' }}
           rows={5}
           cols={25}
-          value={table[tb.cell.row.id].col9}
+          value={table[tb.cell.row.id].comments1}
         ></textarea>
       </form>
     )
@@ -128,48 +133,251 @@ const BetaFailAnalysisPanel = () => {
     )
   }
 
-  const handleSearch = () => {
+  const handleSearch = async () => {
     setLoading(true)
+    let searchData: any
+    searchData = await dispatch(
+      getReturnMailAndEmailReport(input.startDate, input.endDate)
+    )
+    console.log(searchData)
   }
 
-  const TableColumns = [
+  const TableColumnsDaily = [
     {
-      Header: 'Action',
-      accessor: 'col3',
+      Header: 'Age',
+      accessor: 'age',
     },
     {
-      Header: 'Category',
-      accessor: 'col4',
+      Header: 'SnapShot Date',
+      accessor: 'snapShotDate',
     },
     {
-      Header: 'Quantity',
-      accessor: 'col5',
+      Header: 'Branch',
+      accessor: 'branch',
+    },
+    {
+      Header: 'Subsidiary Number',
+      accessor: 'entity',
+    },
+    {
+      Header: 'Account Number',
+      accessor: 'accT_NBR',
+    },
+
+    {
+      Header: 'Counter Type',
+      accessor: 'counterpartyType',
+    },
+    {
+      Header: 'Security ID',
+      accessor: 'securityID',
     },
     {
       Header: 'Symbol',
-      accessor: 'col6',
+      accessor: 'symbol',
     },
     {
-      Header: 'Description',
-      accessor: 'col7',
+      Header: 'Buy/Sell',
+      accessor: 'buY_SELL',
     },
     {
-      Header: 'Amount',
-      accessor: 'col8',
+      Header: 'Current Quantity',
+      accessor: 'currenT_QUANTITY',
     },
-    type.value === 'Daily'
-      ? {
-          Header: 'Comments',
-          Cell: dailyComments,
-        }
-      : { Header: 'comment', Cell: histocialComments },
+    {
+      Header: 'Original Quantity',
+      accessor: 'originaL_QUANTITY',
+    },
+    {
+      Header: 'Trade Date',
+      accessor: 'tradE_DATE',
+    },
+    {
+      Header: 'Settele date',
+      accessor: 'settlE_DATE',
+    },
+    {
+      Header: 'Entery Date',
+      accessor: 'entrY_DATE',
+    },
+    {
+      Header: 'Price',
+      accessor: 'price',
+    },
+    {
+      Header: 'Net Ammount',
+      accessor: 'neT_AMOUNT',
+    },
+    {
+      Header: 'Fail Reason',
+      accessor: 'faiL_REASON',
+    },
+    {
+      Header: 'Status Code',
+      accessor: 'dtC_PROCESS_STATUS_CODE',
+    },
+    {
+      Header: 'ID',
+      accessor: 'id',
+    },
+    {
+      Header: 'Created BY',
+      accessor: 'createdBy',
+    },
+    {
+      Header: 'Created On',
+      accessor: 'createdOn',
+    },
+    {
+      Header: 'Updated By',
+      accessor: 'updateBy',
+    },
+    {
+      Header: 'Updated On',
+      accessor: 'updateOn',
+    },
+    {
+      Header: 'Deleted',
+      accessor: 'isDeleted',
+    },
+    {
+      Header: 'Deleted By',
+      accessor: 'deletedBy',
+    },
+    {
+      Header: 'Deleted On',
+      accessor: 'deletedOn',
+    },
+    {
+      Header: 'Row Version',
+      accessor: 'rowVersion',
+    },
 
-    type.value === 'Daily'
-      ? {
-          Header: 'Add Notes',
-          Cell: addNotes,
-        }
-      : { Header: '', accessor: ' ' },
+    {
+      Header: 'Comments',
+      Cell: dailyComments,
+    },
+
+    {
+      Header: 'Add Notes',
+      Cell: addNotes,
+    },
+  ]
+  const TableColumnsHistorical = [
+    {
+      Header: 'Age',
+      accessor: 'age',
+    },
+    {
+      Header: 'SnapShot Date',
+      accessor: 'snapShotDate',
+    },
+    {
+      Header: 'Branch',
+      accessor: 'branch',
+    },
+    {
+      Header: 'Subsidiary Number',
+      accessor: 'entity',
+    },
+    {
+      Header: 'Account Number',
+      accessor: 'accT_NBR',
+    },
+
+    {
+      Header: 'Counter Type',
+      accessor: 'counterpartyType',
+    },
+    {
+      Header: 'Security ID',
+      accessor: 'securityID',
+    },
+    {
+      Header: 'Symbol',
+      accessor: 'symbol',
+    },
+    {
+      Header: 'Buy/Sell',
+      accessor: 'buY_SELL',
+    },
+    {
+      Header: 'Current Quantity',
+      accessor: 'currenT_QUANTITY',
+    },
+    {
+      Header: 'Original Quantity',
+      accessor: 'originaL_QUANTITY',
+    },
+    {
+      Header: 'Trade Date',
+      accessor: 'tradE_DATE',
+    },
+    {
+      Header: 'Settele date',
+      accessor: 'settlE_DATE',
+    },
+    {
+      Header: 'Entery Date',
+      accessor: 'entrY_DATE',
+    },
+    {
+      Header: 'Price',
+      accessor: 'price',
+    },
+    {
+      Header: 'Net Ammount',
+      accessor: 'neT_AMOUNT',
+    },
+    {
+      Header: 'Fail Reason',
+      accessor: 'faiL_REASON',
+    },
+    {
+      Header: 'Status Code',
+      accessor: 'dtC_PROCESS_STATUS_CODE',
+    },
+    {
+      Header: 'ID',
+      accessor: 'id',
+    },
+    {
+      Header: 'Created BY',
+      accessor: 'createdBy',
+    },
+    {
+      Header: 'Created On',
+      accessor: 'createdOn',
+    },
+    {
+      Header: 'Updated By',
+      accessor: 'updateBy',
+    },
+    {
+      Header: 'Updated On',
+      accessor: 'updateOn',
+    },
+    {
+      Header: 'Deleted',
+      accessor: 'isDeleted',
+    },
+    {
+      Header: 'Deleted By',
+      accessor: 'deletedBy',
+    },
+    {
+      Header: 'Deleted On',
+      accessor: 'deletedOn',
+    },
+    {
+      Header: 'Row Version',
+      accessor: 'rowVersion',
+    },
+
+    {
+      Header: 'Comments',
+      Cell: histocialComments,
+    },
   ]
 
   return (
@@ -180,7 +388,7 @@ const BetaFailAnalysisPanel = () => {
             <h3>BETA Fail Analysis</h3>
           </StyledPanelHeadTitle>
         </StyledPanelHead>
-        <StyledPanelMonthSelect>
+        <StyledPanelSelect>
           <StyledSelectWrapper>
             <div className="wd230">
               <Label color={'black'} label={'Type'}></Label>
@@ -316,7 +524,7 @@ const BetaFailAnalysisPanel = () => {
             </div>
           </StyledSelectWrapper>
 
-          {loading && type.value == 'Daily' && (
+          {loading && type.value === 'Daily' && (
             <CardContainer style={{ width: '50%' }}>
               <div>Fail Summary</div>
               <StyledTableContainer></StyledTableContainer>
@@ -325,11 +533,18 @@ const BetaFailAnalysisPanel = () => {
           {loading && (
             <RootContainer>
               <StyledTableContainer>
-                <AccountActivityTable data={table} columns={TableColumns} />
+                <AccountActivityTable
+                  data={table}
+                  columns={
+                    type.value === 'Daily'
+                      ? TableColumnsDaily
+                      : TableColumnsHistorical
+                  }
+                />
               </StyledTableContainer>
             </RootContainer>
           )}
-        </StyledPanelMonthSelect>
+        </StyledPanelSelect>
       </RootContainer>
     </>
   )

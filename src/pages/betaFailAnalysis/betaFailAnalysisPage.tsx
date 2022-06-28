@@ -6,7 +6,7 @@ import BetaFailAnalysisPanel from './BetaFailAnalysisPanel/betFailAnalysisPanel'
 
 const BetaFailAnalysisContent = () => {
   return (
-    <RootContainer>
+    <RootContainer id="T2">
       <BetaFailAnalysisPanel />
     </RootContainer>
   )

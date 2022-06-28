@@ -1,27 +1,13 @@
-import { createStore } from 'redux'
+import { configureStore, Store ,combineReducers} from '@reduxjs/toolkit';
+ import {failAnalysisReducer} from './failAnalysis'
 
-interface ActionType {
-  // INCREMENT = 'increment',
-  // DECREMENT = 'decrement',
-  type: string
-}
+ const reducer = combineReducers({
+  failAnalysis:failAnalysisReducer
+ })
 
-const counterReducer = (state = { counter: 0 }, action: ActionType) => {
-  if (action.type === 'increment') {
-    return {
-      counter: state.counter + 1,
-    }
-  }
+ const store:Store =configureStore({
+  reducer
+ })
 
-  if (action.type === 'decrement') {
-    return {
-      counter: state.counter - 1,
-    }
-  }
-
-  return state
-}
-
-const store = createStore(counterReducer)
-
+ export type StoreState =ReturnType <typeof reducer>
 export default store
