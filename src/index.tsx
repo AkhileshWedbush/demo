@@ -7,15 +7,12 @@ import App from './App'
 import reportWebVitals from './reportWebVitals'
 
 import { BrowserRouter } from 'react-router-dom'
-
-import MockServer from './apiMockServer'
 // const environment = process.env.NODE_ENV
 
 // if (environment !== 'production') {
 //   MockServer({ environment })
 // }
 
-MockServer()
 
 const root = ReactDOM.createRoot(document.getElementById('root') as HTMLElement)
 root.render(

@@ -2,7 +2,7 @@ import styled from 'styled-components'
 import { RootContainer, PageHeadingWrapper } from './styles'
 import { Icons } from '../../../shared/GlobalStyle'
 
-import StockWidget from '../../../widgets/stockWidget/StockWidget'
+//import StockWidget from '../../../widgets/stockWidget/StockWidget'
 
 const StyledToggleControl = styled.div`
   position: relative;
@@ -14,7 +14,7 @@ const StyledSliderToggle = styled.div`
   width: 32px;
   height: 32px;
   left: -50px;
-  top: -24px;
+  top: -10px;
   background: #ffffff;
   border-radius: 50%;
   display: flex;
@@ -32,7 +32,7 @@ const HeaderContent = (Props: HeaderContentProps) => {
 
   return (
     <RootContainer>
-      <StockWidget />
+      {/* <StockWidget /> */}
       <PageHeadingWrapper>
         <StyledToggleControl>
           <StyledSliderToggle onClick={Props.toggleMenuHandler}>

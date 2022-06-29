@@ -71,10 +71,8 @@ export const getReturnMailAndEmailReport:any = (  startDate: string, endDate: st
     console.log("TEST2");
     const { data, status } = await authApiCall.get('NewAccounts/ReturnMailAndEmailReport', {
       params: {
-        
         startDate,
         endDate,
-
       }
     });
 

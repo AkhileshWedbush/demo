@@ -12,6 +12,7 @@ import {
 import { Icons } from '../../../shared/GlobalStyle'
 
 import { MenuItem, ProfileMenuItem, FooterMenu } from './menuItem/MenuItem'
+import Divider from '../../../components/divider/Divider'
 
 interface SidePaneContentProps {
   isSideMenuOpen: boolean
@@ -21,8 +22,8 @@ const SidePaneContent = (Props: SidePaneContentProps) => {
   const isMenuOpen = Props.isSideMenuOpen
 
   const imageSrc = isMenuOpen
-    ? Icons.Wedbushlogo
-    : Icons.WedbushLogoOnlySmall
+    ? Icons.wedbush
+    : Icons.Wedbushlogo
 
   return (
     <RootContainer>
@@ -31,9 +32,10 @@ const SidePaneContent = (Props: SidePaneContentProps) => {
           <Image image={imageSrc} alt={'Wedbush Logo'} />
         </Link>
       </StyledLogoContainer>
-      <StyledMenuListContainer>
-        <ProfileMenuItem isSideMenuOpen={Props.isSideMenuOpen} />
-        <MenuItem isSideMenuOpen={Props.isSideMenuOpen} />
+      <StyledMenuListContainer id="t3"> 
+        <ProfileMenuItem  isSideMenuOpen={Props.isSideMenuOpen}  />
+        <Divider thickness={'1px'} horizontal={true} bgColor={'#CBD5E1;'}></Divider>
+        <MenuItem isSideMenuOpen={Props.isSideMenuOpen}  />
       </StyledMenuListContainer>
 
       <StyledBottomContainer>

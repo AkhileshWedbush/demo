@@ -1,4 +1,4 @@
-import { Fragment, useState } from 'react'
+import { Fragment, useEffect, useState } from 'react'
 
 import {
   SidebarDropProps,
@@ -21,12 +21,27 @@ const SidebarDrop = ({
   label,
   color,
   icon,
-  isMenuOpen = true,
+  isMenuOpen,
   hasSubMenu,
   alt,
   items,
 }: SidebarDropProps) => {
   const [clicked, setClicked] = useState(false)
+  useEffect(()=>{
+    if(isMenuOpen === false){
+      setClicked(false)
+    }
+  }, [isMenuOpen])
+  console.log(isMenuOpen)
+
+  const toggle = () =>{
+    
+      if (isMenuOpen === true)
+      {
+        return (setClicked(!clicked))
+      }
+    
+  }
 
   return (
     <>
@@ -34,7 +49,7 @@ const SidebarDrop = ({
         bgColor={bgColor}
         color={color}
         hasSubMenu={hasSubMenu}
-        onClick={() => setClicked(!clicked)}
+        onClick={() => toggle()}
         clicked={clicked}
       >
         <IconWrapper>

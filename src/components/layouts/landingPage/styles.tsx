@@ -24,7 +24,7 @@ export const MainPane = styled.div`
   flex-direction: column;
   flex: 5 1 auto;
   min-height: 100vh;
-  background: rgb(165, 197, 249);
+  background: #e6eaf0;
 `
 
 export const MainContentWrapper = styled.div`

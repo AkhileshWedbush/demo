@@ -1,4 +1,5 @@
 import WedbushLogo from '../assets/images/WedbushLogo.png'
+import wedbush from '../assets/icons/wedbush.png'
 import WedbushLogoSmall from '../assets/images/WedbushLogo-sm.png'
 import WedbushLogoOnlySmall from '../assets/images/WedbushLogoOnly-sm.png'
 import ChevronLeft from '../assets/icons/size16/Chevronleft.png'
@@ -31,8 +32,8 @@ import UploadActive from '../assets/icons/size16/UploadActive.png'
 import WedbushClientLink from '../assets/images/ArtBoard.png'
 import Wedbushlogo from '../assets/icons/size16/Wedbushlogo.png'
 export const Icons = {
+  wedbush,
   WedbushClientLink,
-  WedbushLogo,
   WedbushLogoSmall,
   WedbushLogoOnlySmall,
   ChevronLeft,

@@ -1,20 +1,24 @@
 import styled, { css } from 'styled-components'
 
 export interface DividerProps {
-  borderColor: string
-  horizontal: boolean
-  borderHeight: string
+  bgColor?: string
+  horizontal?: boolean
+  thickness: string
 }
 
 export const DividerLine = styled.div<DividerProps>`
-  ${({ horizontal }: DividerProps) =>
+  ${({ horizontal, thickness, bgColor }: DividerProps) =>
     horizontal
       ? css`
-          border-bottom: ${(props: DividerProps) => props.borderHeight} solid
-            ${(props: DividerProps) => props.borderColor};
+          width: 100%;
+          height: ${thickness};
+          background-color: ${bgColor};
         `
       : css`
-          border-left: ${(props: DividerProps) => props.borderHeight} solid
-            ${(props: DividerProps) => props.borderColor};
+          width: ${thickness};
+          height: 100vh;
+          background-color: ${bgColor};
+          margin: 0px;
+          padding: 0px;
         `}
 `

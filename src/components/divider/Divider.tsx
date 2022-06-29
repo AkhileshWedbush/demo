@@ -1,11 +1,11 @@
 import { DividerLine, DividerProps } from './styles'
 
-const Divider = ({ borderColor, horizontal, borderHeight }: DividerProps) => {
+const Divider = ({ horizontal, thickness, bgColor }: DividerProps) => {
   return (
     <DividerLine
-      borderColor={borderColor}
-      horizontal={horizontal}
-      borderHeight={borderHeight}
+    bgColor={bgColor}
+    horizontal={horizontal}
+    thickness={thickness}
     ></DividerLine>
   )
 }

@@ -2,6 +2,7 @@ import styled from 'styled-components'
 
 export const LandingPageLayout = styled.div`
   background-color: #f0f2f5;
+  width:100%;
 `
 export const ClientGreetingsPanel = styled.div`
   display: flex;

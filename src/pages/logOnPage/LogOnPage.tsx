@@ -128,7 +128,7 @@ const LogOnPage = () => {
           <p>Providing excellent service to our clients</p>
         </StyledImageWrapper>
         <StyledContentWrapper>
-          <img src={Icons.WedbushLogo} alt="Site Logo" />
+          <img src={Icons.wedbush} alt="Site Logo" />
           <h3>Welcome Back</h3>
           <StyledFormWrapper>
             {/* <Counter /> */}
