@@ -32,9 +32,9 @@ const HeaderContent = (Props: HeaderContentProps) => {
 
   return (
     <RootContainer>
-      {/* <StockWidget /> */}
       <PageHeadingWrapper>
         <StyledToggleControl>
+        <h3>Operation Hub</h3>
           <StyledSliderToggle onClick={Props.toggleMenuHandler}>
             {isSideMenuOpen ? (
               <img src={Icons.ChevronLeft} alt="toggle" />

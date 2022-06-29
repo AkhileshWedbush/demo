@@ -13,7 +13,7 @@ import FooterContent from './landingPage/footerContent/FooterContent'
 import SidePaneContent from './landingPage/sidePaneContent/SidePaneContent'
 
 import { useState } from 'react'
-import LandingPage from './landingPage/LandingPage'
+//import LandingPage from './landingPage/LandingPage'
 
 function PageContent() {
   const [isOpen, setIsOpen] = useState(true)

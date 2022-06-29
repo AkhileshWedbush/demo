@@ -17,7 +17,7 @@ import Button from '../../../components/button/Button'
 import { AccountActivityData } from './table/TableData'
 import AccountActivityTable from './table/AccountActivityTable'
 import Label from '../../../components/label/Label'
-import { getReturnMailAndEmailReport } from '../../../store/failAnalysis/beta-fail-analysis'
+import { getBetaFailAnalysis } from '../../../store/failAnalysis/beta-fail-analysis'
 import { useDispatch } from 'react-redux'
 
 const BetaFailAnalysisPanel = () => {
@@ -137,7 +137,7 @@ const BetaFailAnalysisPanel = () => {
     setLoading(true)
     let searchData: any
     searchData = await dispatch(
-      getReturnMailAndEmailReport(input.startDate, input.endDate)
+      getBetaFailAnalysis(input.startDate, input.endDate)
     )
     console.log(searchData)
   }

@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import { StoreState } from '../index';
 
 /* eslint-disable prefer-const */
@@ -8,9 +9,8 @@ import {authApiCall} from '../../utils/api'
 
 interface State {
   csv: string;
-  returnMailAndEmailReport: [];
+  betaFailAnalysis: [];
   totalCount: number;
-  isLoading: boolean;
   currentPage: number;
   pages: number;
   pageSize: number;
@@ -19,44 +19,36 @@ interface State {
 }
 
 let initialState: State = {
-  returnMailAndEmailReport: [],
+  betaFailAnalysis: [],
   totalCount: 0,
   currentPage: 0,
   pages: 0,
   pageSize: 50,
   csv: '',
-  isLoading: false,
   action: '',
   
 };
 
 const { actions, reducer }: Slice = createSlice({
-  name: 'return-mail-and-email-report',
+  name: 'beta-fail-analysis',
   initialState,
   reducers: {
-    setReturnMailAndEmailReportAccount: (state: State, action: PayloadAction<any>) => {
-      state.returnMailAndEmailReport = action.payload.data;
+    setBetaFailAnalysis: (state: State, action: PayloadAction<any>) => {
+      state.betaFailAnalysis = action.payload.data;
       state.totalCount = action.payload.totalCount;
       state.pages = Math.ceil(action.payload.totalCount / action.payload.pageSize);
       state.pageSize = action.payload.pageSize;
       state.currentPage = action.payload.currentPage;
     },
-    setIsLoading: (state: State, action: PayloadAction<boolean>) => {
-      state.isLoading = action.payload;
-    },
-    setReturnMailAndEmailReportCSV: (state: State, action: PayloadAction<any>) => {
-      state.csv = action.payload;
-    },
    
     setAction: (state: State, action: PayloadAction<string>) => {
       state.action = action.payload;
-      state.isLoading = true;
     },
     
   },
 });
 
-export const { setAction,setReturnMailAndEmailReportAccount, setIsLoading,setReturnMailAndEmailReportCSV } = actions;
+export const { setAction,setBetaFailAnalysis, setIsLoading,setReturnMailAndEmailReportCSV } = actions;
 
 /**
  * getReturnMail
@@ -64,11 +56,10 @@ export const { setAction,setReturnMailAndEmailReportAccount, setIsLoading,setRet
  * @param {string} startDate 
  * @param {string} endDate 
  */
-export const getReturnMailAndEmailReport:any = (  startDate: string, endDate: string) => async (dispatch: Dispatch) => {
+export const getBetaFailAnalysis:any = (  startDate: string, endDate: string) => async (dispatch: Dispatch) => {
 
 
   try {
-    console.log("TEST2");
     const { data, status } = await authApiCall.get('NewAccounts/ReturnMailAndEmailReport', {
       params: {
         startDate,
@@ -77,21 +68,18 @@ export const getReturnMailAndEmailReport:any = (  startDate: string, endDate: st
     });
 
     if (status === 200) {
-      console.log("TEST3");
-      dispatch(setReturnMailAndEmailReportAccount({
+      dispatch(setBetaFailAnalysis({
         data: data.data,
         totalCount: data.totalCount,
       }));
-      dispatch(setIsLoading(false));
       return(data)
     }
   } catch (e: any) {
-    dispatch(setIsLoading(false));
-
+    console.log("null")
   }
   
 };
 
 
-  export const betaFailAnalysisDataSelector = (store:StoreState) =>store.failAnalysis.betafailanalysis.betafailanalysis;
+  export const betaFailAnalysisDataSelector = (store:StoreState) =>store.failAnalysis.betafailanalysis.betaFailAnalysis;
   export default reducer;

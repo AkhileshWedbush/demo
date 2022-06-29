@@ -4,7 +4,7 @@ export const RootContainer = styled.div`
   display: flex;
   flex-direction: column;
   color: black;
-  background-color: #f0f2f5;
+  background-color: #e6eaf0;
   /* background-color: red; */
 `
 
