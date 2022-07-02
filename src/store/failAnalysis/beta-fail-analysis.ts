@@ -1,85 +1,211 @@
+/* eslint-disable @typescript-eslint/no-inferrable-types */
+
 /* eslint-disable @typescript-eslint/no-explicit-any */
-import { StoreState } from '../index';
+import { StoreState } from '../index'
 
 /* eslint-disable prefer-const */
 
 import { createSlice, Dispatch, PayloadAction, Slice } from '@reduxjs/toolkit'
-import {authApiCall} from '../../utils/api'
-
+import { authApiCall } from '../../utils/api'
 
 interface State {
-  csv: string;
-  betaFailAnalysis: [];
-  totalCount: number;
-  currentPage: number;
-  pages: number;
-  pageSize: number;
-  action: string;
- 
+  csv: string
+  betaFailAnalysis: []
+  comments: []
+  totalCount: number
+  isLoading: boolean
+  action: string
 }
 
 let initialState: State = {
   betaFailAnalysis: [],
+  comments: [],
   totalCount: 0,
-  currentPage: 0,
-  pages: 0,
-  pageSize: 50,
+  isLoading: false,
   csv: '',
   action: '',
-  
-};
+}
 
 const { actions, reducer }: Slice = createSlice({
   name: 'beta-fail-analysis',
   initialState,
   reducers: {
-    setBetaFailAnalysis: (state: State, action: PayloadAction<any>) => {
-      state.betaFailAnalysis = action.payload.data;
-      state.totalCount = action.payload.totalCount;
-      state.pages = Math.ceil(action.payload.totalCount / action.payload.pageSize);
-      state.pageSize = action.payload.pageSize;
-      state.currentPage = action.payload.currentPage;
+    SetBetaFailAnalysis: (state: State, action: PayloadAction<any>) => {
+      state.betaFailAnalysis = action.payload.data
     },
-   
-    setAction: (state: State, action: PayloadAction<string>) => {
-      state.action = action.payload;
+    setComments: (state: State, action: PayloadAction<any>) => {
+      console.log('hi')
+      console.log(action.payload)
+      state.comments = action.payload.data
     },
-    
-  },
-});
+    setIsLoading: (state: State, action: PayloadAction<boolean>) => {
+      state.isLoading = action.payload
+    },
 
-export const { setAction,setBetaFailAnalysis, setIsLoading,setReturnMailAndEmailReportCSV } = actions;
+    setAction: (state: State, action: PayloadAction<string>) => {
+      state.action = action.payload
+    },
+  },
+})
+
+export const {
+  setAction,
+  SetBetaFailAnalysis,
+  setIsLoading,
+  setReturnMailAndEmailReportCSV,
+  setComments,
+} = actions
 
 /**
  * getReturnMail
  * API - GET call to get beta new accounts report
- * @param {string} startDate 
- * @param {string} endDate 
+ * @param {string} startDate
+ * @param {string} endDate
+ *  @param {string} action
  */
-export const getBetaFailAnalysis:any = (  startDate: string, endDate: string) => async (dispatch: Dispatch) => {
-
-
-  try {
-    const { data, status } = await authApiCall.get('NewAccounts/ReturnMailAndEmailReport', {
-      params: {
-        startDate,
-        endDate,
-      }
-    });
-
-    if (status === 200) {
-      dispatch(setBetaFailAnalysis({
-        data: data.data,
-        totalCount: data.totalCount,
-      }));
-      return(data)
-    }
-  } catch (e: any) {
-    console.log("null")
+export const getAction: any =
+  (action: string) => async (dispatch: Dispatch) => {
+    dispatch(setAction(action))
+    dispatch(
+      SetBetaFailAnalysis({
+        data: '',
+      })
+    )
   }
+export const getUserComment: any =
+  ( 
   
-};
+    system: string,
+    failUniqueId: string,
+    comment: string,
+    createdBy: string,
+    createdOn: string
+  ) =>
+  async () => {
+    console.log('test1')
+    try {
+      const { data, status } = await authApiCall.post(
+        'FailAnalysisReport/AddComment',
+        {
+          system,
+          failUniqueId,
+          comment,
+          createdBy,
+          createdOn,
+        }
+      )
 
+      if (status === 200) {
+        return data
+      }
+    } catch {
+      //console.log(null)
+    }
+  }
+export const getComments: any =
+  (system: string, failUniqueId: string) => async (dispatch: Dispatch) => {
+    console.log('test1')
+    try {
+      const { data, status } = await authApiCall.get(
+        'FailAnalysisReport/GetComments',
+        {
+          params: {
+            system,
+            failUniqueId,
+          },
+        }
+      )
 
-  export const betaFailAnalysisDataSelector = (store:StoreState) =>store.failAnalysis.betafailanalysis.betaFailAnalysis;
-  export default reducer;
+      if (status === 200) {
+        dispatch(
+          setComments({
+            data: data,
+          })
+        )
+        return data
+      }
+    } catch {
+      dispatch(
+        setComments({
+          data: 'NULL',
+        })
+      )
+      //console.log(null)
+    }
+  }
+export const getBetaFailAnalysis: any =
+  (
+    action: string,
+    fromDate: string,
+    toDate: string,
+    ageFilter: string,
+    accountNumber: string,
+    branch: string,
+    subsidiaryNumber: string,
+    buySell: string,
+    cusip: string,
+    pageNumber: number,
+    pageSize: number = 20,
+    sortBy: string = 'SnapShotDate, Age',
+    sortDirection: string = 'ASC',
+    searchFilter: string = ''
+  ) =>
+  async (dispatch: Dispatch) => {
+    dispatch(setIsLoading(true))
+    dispatch(
+      SetBetaFailAnalysis({
+        data: '',
+      })
+    )
+    try {
+      const { data, status } = await authApiCall.post(
+        'FailAnalysisReport/GetBetaFailAnalysisHistoryReport',
+        {
+          fromDate,
+          toDate,
+          ageFilter,
+          accountNumber,
+          branch,
+          subsidiaryNumber,
+          buySell,
+          cusip,
+          pageNumber,
+          pageSize,
+          sortBy,
+          sortDirection,
+          searchFilter,
+        }
+      )
+
+      if (status === 200) {
+        dispatch(setAction(action))
+        dispatch(
+          SetBetaFailAnalysis({
+            data: data,
+          })
+        )
+        dispatch(setIsLoading(false))
+        return true
+      }
+    } catch (e: any) {
+      console.log('null')
+      dispatch(setIsLoading(false))
+      dispatch(
+        SetBetaFailAnalysis({
+          data: '',
+        })
+      )
+    }
+  }
+
+export const betaFailAnalysisDataSelector = (store: StoreState) =>
+  store.failAnalysis.betafailanalysis.betaFailAnalysis
+export const actionSelector = (store: StoreState) =>
+  store.failAnalysis.betafailanalysis.action
+export const errorSelector = (store: StoreState) =>
+  store.failAnalysis.betafailanalysis.error
+export const isLoadingSelector = (store: StoreState) =>
+  store.failAnalysis.betafailanalysis.isLoading
+export const commentSelector = (store: StoreState) =>
+  store.failAnalysis.betafailanalysis.comments
+export default reducer

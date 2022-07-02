@@ -12,6 +12,7 @@ const Button = ({
   height,
   width,
   padding,
+  disabled,
   borderRadius,
   icon,
   image,
@@ -27,6 +28,7 @@ const Button = ({
       borderRadius={borderRadius}
       icon={icon}
       width={width}
+      disable={disabled}
       onClick={onClick}
     >
       {title}

@@ -1,4 +1,4 @@
-/* eslint-disable prefer-const */
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CardContainer,
@@ -9,66 +9,90 @@ import {
   StyledPanelSelect,
   StyledSelectWrapper,
 } from './styles'
-import './table/style.css'
-import { useState } from 'react'
+import { Primary24 } from '../../../components/spinner/Spinner.stories'
+import './table/dropdown.css'
+import { useEffect, useState } from 'react'
 import Select from 'react-select'
 import { Textbox } from '../../../components/textbox/Textbox'
 import Button from '../../../components/button/Button'
-import { AccountActivityData } from './table/TableData'
+import { userComment } from './table/TableData'
 import AccountActivityTable from './table/AccountActivityTable'
 import Label from '../../../components/label/Label'
-import { getBetaFailAnalysis } from '../../../store/failAnalysis/beta-fail-analysis'
+import {
+  actionSelector,
+  getBetaFailAnalysis,
+  isLoadingSelector,
+  getAction,
+  getComments,
+  commentSelector,
+  getUserComment,
+} from '../../../store/failAnalysis/beta-fail-analysis'
 import { useDispatch } from 'react-redux'
+import { betaFailAnalysisDataSelector } from '../../../store/failAnalysis/beta-fail-analysis'
+import { useSelector } from 'react-redux'
+//import { AnyArray } from 'immer/dist/internal'
 
 const BetaFailAnalysisPanel = () => {
   const dispatch = useDispatch()
-  const [table, setTable] = useState<any>(AccountActivityData)
+  const com = useSelector(commentSelector)
+  const data = useSelector(betaFailAnalysisDataSelector)
+  const buffering = useSelector(isLoadingSelector)
+  const action = useSelector(actionSelector)
+  const [inputComment, setInputComment] = useState<any>(userComment)
   const [loading, setLoading] = useState<boolean>(false)
-  const [ageRange, setAgeRange] = useState<any>({
-    value: '1',
-    label: '1',
+  // eslint-disable-next-line prefer-const
+  let [comment, setComment] = useState<any>({
+    comments: '',
   })
+  const [ageRange, setAgeRange] = useState<any>('')
+  const [buySell, setBuySell] = useState<any>('')
   const [type, setType] = useState<any>({
-    value: 'Daily',
+    value: 'daily',
     label: 'Daily',
   })
-  const [buySell, setBuySell] = useState<any>({
-    value: 'Null',
-    label: 'Null',
-  })
-  let [input, setInput] = useState({
+  const [input, setInput] = useState({
+    commentDate: new Date().toISOString(),
     startDate: new Date().toISOString().split('T')[0],
-    endDate: '',
+    endDate: new Date().toISOString().split('T')[0],
     cusip: '',
     subsidiaryNumber: '',
     branch: '',
     accountNumber: '',
+    pageNumber: 0,
   })
   const ageOptions: any = [
+    { value: '', label: 'Null' },
     { value: '1', label: '1' },
     { value: '2_5', label: '2 to 5' },
     { value: '6_30', label: '6 to 30' },
     { value: '30_more', label: '30 more' },
   ]
   const typeOption: any = [
-    { value: 'Daily', label: 'Daily' },
+    { value: 'daily', label: 'Daily' },
     { value: 'Historical', label: 'Historical' },
   ]
   const BSoption: any = [
-    { value: 'Null', label: 'Null' },
+    { value: '', label: 'Null' },
     { value: 'S', label: 'Sell' },
     { value: 'B', label: 'Buy' },
   ]
-      
-  
+  console.log( inputComment[0].comments)
 
-
-  const onchange = (e: any, rowId: number) => {
-    table[rowId].comments = e.target.value
-    setTable(table)
-    console.log(table)
-  }
   const histocialComments = (tb: any) => {
+    useEffect(() => {
+      dispatch(
+        getComments('daily', data.betaReport[tb.cell.row.id].failUniqueId)
+      )
+      comment[tb.cell.row.id].new = com[tb.cell.row.id]
+      setComment([...comment])
+    }, [])
+
+    // console.log(com[tb.cell.row.id].comment)
+
+    //  const uncomments:any = comments.map((element:any,index:any)=>{
+    //   uncomments.push(element.comment)
+    //  })
+    // console.log(comments[tb.cell.row.id].comment)
     return (
       <form>
         <textarea
@@ -76,38 +100,53 @@ const BetaFailAnalysisPanel = () => {
           style={{ resize: 'none' }}
           rows={5}
           cols={25}
-          value={table[tb.cell.row.id].comments1}
+          value={'com'}
         ></textarea>
       </form>
     )
   }
 
-  const dailyComments = (tb: any) => {
-    return (
-      <form>
-        <textarea
-          disabled
-          style={{ resize: 'none' }}
-          rows={5}
-          cols={20}
-          value={table[tb.cell.row.id].userComment}
-        ></textarea>
-      </form>
+  // const dailyComments = (tb: any) => {
+  //   return (
+  //     <form>
+  //       <textarea
+  //         disabled
+  //         style={{ resize: 'none' }}
+  //         rows={5}
+  //         cols={20}
+  //         //value={dispatch(getComments(type.value, data.betaReport[tb.cell.row.id].failUniqueId))}
+  //       ></textarea>
+  //     </form>
+  //   )
+  // }
+  const newUserComment = async (
+    type: string,
+    failId: string,
+    comment: string,
+    user: string,
+    rowId: number
+  ) => {
+   await  dispatch(
+      getUserComment(
+        type,
+        failId,
+        comment,
+        user,
+        input.commentDate
+      )
     )
+    inputComment[rowId].comments = ''
+    console.log(inputComment[rowId].comments)
+    setInputComment([...inputComment])
   }
-  const appendToTextBox = (rowID: number, value: any) => {
-    table[rowID].userComment = table[rowID].userComment
-      ? table[rowID].userComment + '\n\n' + value
-      : value
-    table[rowID].comments = ''
-    setTable([...table])
-  }
+
   const addNotes = (tb: any) => {
     return (
       <div>
         <Textbox
           onChange={(e: any) => {
-            onchange(e, tb.cell.row.id)
+            inputComment[tb.cell.row.id].comments = e.target.value
+            setInputComment([...inputComment])
           }}
         ></Textbox>
         <div
@@ -117,29 +156,83 @@ const BetaFailAnalysisPanel = () => {
             justifyContent: 'flex-end',
           }}
         >
-          <Button
+        {inputComment[tb.cell.row.id].comments  ?
+         <Button
             bgColor="#1F5EB7"
             color="#FFFFFF"
             height="35px"
             width="80px"
             onClick={() => {
-              console.log(table[tb.cell.row.id].comments)
-              appendToTextBox(tb.cell.row.id, table[tb.cell.row.id].comments)
+              // console.log(table[tb.cell.row.id].comments)
+              newUserComment(
+                type.value,
+                data.betaReport[tb.cell.row.id].failUniqueId,
+                inputComment[tb.cell.row.id].comments,
+                'me',
+                tb.cell.row.id
+              )
             }}
             title="Submit"
-          />
+          />: <Button
+          bgColor="#A7AFBC"
+          color="#FFFFFF"
+          height="35px"
+          width="80px"
+          title="Submit"
+        /> }
         </div>
       </div>
+      
     )
   }
 
-  const handleSearch = async () => {
-    setLoading(true)
-    let searchData: any
-    searchData = await dispatch(
-      getBetaFailAnalysis(input.startDate, input.endDate)
+  const handleSearch = async (firstPage: number) => {
+    setInput({ ...input, pageNumber: 0 })
+    console.log(input.pageNumber)
+    await dispatch(
+      getBetaFailAnalysis(
+        'search',
+        input.startDate,
+        input.endDate,
+        ageRange.value,
+        input.accountNumber,
+        input.branch,
+        input.subsidiaryNumber,
+        buySell.value,
+        input.cusip,
+        firstPage
+      )
     )
-    console.log(searchData)
+    setLoading(true)
+  }
+  const handle = async () => {
+    //console.log(data.betaReport[0].failUniqueId)
+    const hi = await dispatch(getComments('daily', '202201051062186B'))
+    // console.log(hi)
+    setComment({ comments: hi[2].comment })
+    console.log(hi[2], hi[2].comment)
+    console.log(comment.comments)
+    console.log(Object.keys(hi).length)
+
+    //console.log(comment)
+  }
+
+  const NavigationGetRecord = async (updatedPage: number) => {
+   await dispatch(
+      getBetaFailAnalysis(
+        'search',
+        input.startDate,
+        input.endDate,
+        ageRange.value,
+        input.accountNumber,
+        input.branch,
+        input.subsidiaryNumber,
+        buySell.value,
+        input.cusip,
+        updatedPage
+      )
+    )
+    setLoading(true)
   }
 
   const TableColumnsDaily = [
@@ -152,69 +245,82 @@ const BetaFailAnalysisPanel = () => {
       accessor: 'snapShotDate',
     },
     {
-      Header: 'Branch',
-      accessor: 'branch',
-    },
-    {
-      Header: 'Subsidiary Number',
-      accessor: 'entity',
-    },
-    {
-      Header: 'Account Number',
-      accessor: 'accT_NBR',
+      Header: 'system',
+      accessor: 'system',
     },
 
     {
-      Header: 'Counter Type',
-      accessor: 'counterpartyType',
+      Header: 'acatAccount',
+      accessor: 'acatAccount',
     },
     {
-      Header: 'Security ID',
-      accessor: 'securityID',
+      Header: 'receiveDeliverCode',
+      accessor: 'receiveDeliverCode',
     },
     {
-      Header: 'Symbol',
-      accessor: 'symbol',
+      Header: 'Subsidiary Number',
+      accessor: 'subsidiaryNumber',
+    },
+
+    {
+      Header: 'branch',
+      accessor: 'branch',
     },
     {
-      Header: 'Buy/Sell',
-      accessor: 'buY_SELL',
+      Header: 'Account Number',
+      accessor: 'accountNumber',
     },
     {
-      Header: 'Current Quantity',
-      accessor: 'currenT_QUANTITY',
+      Header: 'buy_Sell',
+      accessor: 'buy_Sell',
     },
     {
-      Header: 'Original Quantity',
-      accessor: 'originaL_QUANTITY',
+      Header: 'cusip',
+      accessor: 'cusip',
     },
     {
-      Header: 'Trade Date',
-      accessor: 'tradE_DATE',
+      Header: 'nasdaqSymbol',
+      accessor: 'nasdaqSymbol',
     },
     {
-      Header: 'Settele date',
-      accessor: 'settlE_DATE',
+      Header: 'securityNumber',
+      accessor: 'securityNumber',
     },
     {
-      Header: 'Entery Date',
-      accessor: 'entrY_DATE',
+      Header: 'quantity',
+      accessor: 'quantity',
     },
     {
-      Header: 'Price',
+      Header: 'partialQuantity',
+      accessor: 'partialQuantity',
+    },
+    {
+      Header: 'amount',
+      accessor: 'amount',
+    },
+    {
+      Header: 'tradeDate',
+      accessor: 'tradeDate',
+    },
+    {
+      Header: 'settleDate',
+      accessor: 'settleDate',
+    },
+    {
+      Header: 'OriginationDate',
+      accessor: 'originationDate',
+    },
+    {
+      Header: 'price',
       accessor: 'price',
     },
     {
-      Header: 'Net Ammount',
-      accessor: 'neT_AMOUNT',
+      Header: 'failConditionCode',
+      accessor: 'failConditionCode',
     },
     {
-      Header: 'Fail Reason',
-      accessor: 'faiL_REASON',
-    },
-    {
-      Header: 'Status Code',
-      accessor: 'dtC_PROCESS_STATUS_CODE',
+      Header: 'dtC_CNS_Eligibility',
+      accessor: 'dtC_CNS_Eligibility',
     },
     {
       Header: 'ID',
@@ -253,10 +359,10 @@ const BetaFailAnalysisPanel = () => {
       accessor: 'rowVersion',
     },
 
-    {
-      Header: 'Comments',
-      Cell: dailyComments,
-    },
+    // {
+    //   Header: 'Comments',
+    //   Cell: dailyComments,
+    // },
 
     {
       Header: 'Add Notes',
@@ -273,69 +379,82 @@ const BetaFailAnalysisPanel = () => {
       accessor: 'snapShotDate',
     },
     {
-      Header: 'Branch',
-      accessor: 'branch',
-    },
-    {
-      Header: 'Subsidiary Number',
-      accessor: 'entity',
-    },
-    {
-      Header: 'Account Number',
-      accessor: 'accT_NBR',
+      Header: 'system',
+      accessor: 'system',
     },
 
     {
-      Header: 'Counter Type',
-      accessor: 'counterpartyType',
+      Header: 'acatAccount',
+      accessor: 'acatAccount',
     },
     {
-      Header: 'Security ID',
-      accessor: 'securityID',
+      Header: 'receiveDeliverCode',
+      accessor: 'receiveDeliverCode',
     },
     {
-      Header: 'Symbol',
-      accessor: 'symbol',
+      Header: 'Subsidiary Number',
+      accessor: 'subsidiaryNumber',
+    },
+
+    {
+      Header: 'branch',
+      accessor: 'branch',
     },
     {
-      Header: 'Buy/Sell',
-      accessor: 'buY_SELL',
+      Header: 'Account Number',
+      accessor: 'accountNumber',
     },
     {
-      Header: 'Current Quantity',
-      accessor: 'currenT_QUANTITY',
+      Header: 'buy_Sell',
+      accessor: 'buy_Sell',
     },
     {
-      Header: 'Original Quantity',
-      accessor: 'originaL_QUANTITY',
+      Header: 'cusip',
+      accessor: 'cusip',
     },
     {
-      Header: 'Trade Date',
-      accessor: 'tradE_DATE',
+      Header: 'nasdaqSymbol',
+      accessor: 'nasdaqSymbol',
     },
     {
-      Header: 'Settele date',
-      accessor: 'settlE_DATE',
+      Header: 'securityNumber',
+      accessor: 'securityNumber',
     },
     {
-      Header: 'Entery Date',
-      accessor: 'entrY_DATE',
+      Header: 'quantity',
+      accessor: 'quantity',
     },
     {
-      Header: 'Price',
+      Header: 'partialQuantity',
+      accessor: 'partialQuantity',
+    },
+    {
+      Header: 'amount',
+      accessor: 'amount',
+    },
+    {
+      Header: 'tradeDate',
+      accessor: 'tradeDate',
+    },
+    {
+      Header: 'settleDate',
+      accessor: 'settleDate',
+    },
+    {
+      Header: 'OriginationDate',
+      accessor: 'originationDate',
+    },
+    {
+      Header: 'price',
       accessor: 'price',
     },
     {
-      Header: 'Net Ammount',
-      accessor: 'neT_AMOUNT',
+      Header: 'failConditionCode',
+      accessor: 'failConditionCode',
     },
     {
-      Header: 'Fail Reason',
-      accessor: 'faiL_REASON',
-    },
-    {
-      Header: 'Status Code',
-      accessor: 'dtC_PROCESS_STATUS_CODE',
+      Header: 'dtC_CNS_Eligibility',
+      accessor: 'dtC_CNS_Eligibility',
     },
     {
       Header: 'ID',
@@ -374,10 +493,10 @@ const BetaFailAnalysisPanel = () => {
       accessor: 'rowVersion',
     },
 
-    {
-      Header: 'Comments',
-      Cell: histocialComments,
-    },
+    // {
+    //   Header: 'Comments',
+    //   Cell: histocialComments,
+    // },
   ]
 
   return (
@@ -399,6 +518,7 @@ const BetaFailAnalysisPanel = () => {
                 onChange={(e: any) => {
                   setType(e)
                   setLoading(false)
+                  dispatch(getAction('null'))
                 }}
               />
             </div>
@@ -416,7 +536,11 @@ const BetaFailAnalysisPanel = () => {
                 max={new Date().toISOString().split('T')[0]}
                 value={new Date().toISOString().split('T')[0]}
                 onChange={(e: any) => {
-                  setInput({ ...input, startDate: e.target.value })
+                  setInput({
+                    ...input,
+                    startDate: e.target.value,
+                    endDate: e.target.value,
+                  })
                 }}
               />
             </div>
@@ -505,11 +629,22 @@ const BetaFailAnalysisPanel = () => {
                 height="35px"
                 width="80px"
                 onClick={() => {
-                  handleSearch()
+                  handle()
+                }}
+                title="null"
+              />
+              <Button
+                bgColor="#1F5EB7"
+                color="#FFFFFF"
+                height="35px"
+                width="80px"
+                onClick={() => {
+                  handleSearch(0)
                 }}
                 title="Search"
               />
             </div>
+            {buffering && <Primary24></Primary24>}
             <div>
               <Button
                 bgColor="#1F5EB7"
@@ -526,17 +661,35 @@ const BetaFailAnalysisPanel = () => {
 
           {loading && type.value === 'Daily' && (
             <CardContainer style={{ width: '50%' }}>
-              <div>Fail Summary</div>
-              <StyledTableContainer></StyledTableContainer>
+              <h3>Fail Summary</h3>
+              <div style={{ width: '100%' }}>
+                <AccountActivityTable
+                  data={data && data.betaSummary ? data.betaSummary : []}
+                  columns={[
+                    {
+                      Header: 'Age Description',
+                      accessor: 'ageDescription',
+                    },
+                    {
+                      Header: 'Quantity',
+                      accessor: 'quantity',
+                    },
+                    {
+                      Header: 'SumAmount',
+                      accessor: 'sumAmount',
+                    },
+                  ]}
+                />
+              </div>
             </CardContainer>
           )}
-          {loading && (
+          {data.betaReport && action === 'search' && loading && (
             <RootContainer>
               <StyledTableContainer>
                 <AccountActivityTable
-                  data={table}
+                  data={data.betaReport}
                   columns={
-                    type.value === 'Daily'
+                    type.value === 'daily'
                       ? TableColumnsDaily
                       : TableColumnsHistorical
                   }
@@ -546,6 +699,42 @@ const BetaFailAnalysisPanel = () => {
           )}
         </StyledPanelSelect>
       </RootContainer>
+      <StyledSelectWrapper>
+        {input.pageNumber === 0 ? (
+          <Button
+            bgColor="#A7AFBC"
+            color="#FFFFFF"
+            height="35px"
+            width="80px"
+            title="Prev"
+          />
+        ) : (
+          <Button
+            bgColor="#1F5EB7"
+            color="#FFFFFF"
+            height="35px"
+            width="80px"
+            onClick={() => {
+              setInput({ ...input, pageNumber: input.pageNumber - 1 })
+              NavigationGetRecord(input.pageNumber - 1)
+            }}
+            title="Prev"
+          />
+        )}
+        <div>{input.pageNumber + 1}</div>
+        <Button
+          bgColor="#1F5EB7"
+          color="#FFFFFF"
+          height="35px"
+          width="80px"
+          disabled={true}
+          onClick={() => {
+            setInput({ ...input, pageNumber: input.pageNumber + 1 })
+            NavigationGetRecord(input.pageNumber + 1)
+          }}
+          title="Next"
+        />
+      </StyledSelectWrapper>
     </>
   )
 }

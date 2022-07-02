@@ -13,24 +13,21 @@ export const ButtonRow = ({ ...props }: ButtonRowProps) => {
         bgColor={Backgrounds.White}
         color={Backgrounds.Primary50}
         title={'Holdings'}
-        borderColor={Backgrounds.Primary50}
-      />
+        borderColor={Backgrounds.Primary50}       />
       {/* </Item1> */}
       {/* <Item2> */}
       <Button
         bgColor={Backgrounds.White}
         color={Backgrounds.Primary50}
         title={'Activity'}
-        borderColor={Backgrounds.Primary50}
-      />
+        borderColor={Backgrounds.Primary50}      />
       {/* </Item2> */}
       {/* <Item3> */}
       <Button
         bgColor={Backgrounds.White}
         color={Backgrounds.Primary50}
         title={'More'}
-        borderColor={Backgrounds.Primary50}
-        // image={Icons.ChevronDown}
+        borderColor={Backgrounds.Primary50}    // image={Icons.ChevronDown}
       />
       {/* </Item3> */}
     </Container>

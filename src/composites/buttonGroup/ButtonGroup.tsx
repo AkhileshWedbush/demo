@@ -14,16 +14,14 @@ const ButtonGroup = ({ backgroundColor }: ButtonGroupProps) => {
           bgColor={Backgrounds.White}
           color={Backgrounds.Primary50}
           title={'Holdings'}
-          borderColor={Backgrounds.Primary50}
-        />
+          borderColor={Backgrounds.Primary50}        />
       </ButtonWrapper>
       <ButtonWrapper order={1}>
         <Button
           bgColor={Backgrounds.White}
           color={Backgrounds.Primary50}
           title={'Activity'}
-          borderColor={Backgrounds.Primary50}
-        />
+          borderColor={Backgrounds.Primary50}        />
       </ButtonWrapper>
       <ButtonWrapper order={2}>
         <Button
@@ -31,8 +29,7 @@ const ButtonGroup = ({ backgroundColor }: ButtonGroupProps) => {
           color={Backgrounds.Primary50}
           title={'More'}
           borderColor={Backgrounds.Primary50}
-          image={Icons.ChevronDown}
-        />
+          image={Icons.ChevronDown}        />
       </ButtonWrapper>
     </Wrapper>
   )

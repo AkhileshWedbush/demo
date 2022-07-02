@@ -3,7 +3,7 @@ import styled from 'styled-components'
 export const RootContainer = styled.div`
   /* background-color: pink; */
   table {
-    width: 100%;
+    width: 100% !important;
    
     
     /* background-color: green; */

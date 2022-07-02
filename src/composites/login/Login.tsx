@@ -208,7 +208,7 @@ export const LogOnForm = ({
             color={'white'}
             borderRadius={'4px'}
             onClick={() => formSubmissionHandler}
-          ></Button>
+                  ></Button>
         </SignIn>
         <AnchorOne>
           <AnchorTagImage

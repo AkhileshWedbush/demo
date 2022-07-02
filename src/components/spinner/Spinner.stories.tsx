@@ -9,11 +9,11 @@ export default {
 }
 
 export const Primary16 = () => (
-  <StyledSpinner borderColorTop={BorderColors.Primary50}></StyledSpinner>
+  <StyledSpinner borderColorTop={BorderColors.Primary80}></StyledSpinner>
 )
 export const Primary24 = () => (
   <StyledSpinner
-    borderColorTop={BorderColors.Primary50}
+    borderColorTop={BorderColors.Primary80}
     size={'24px'}
   ></StyledSpinner>
 )
@@ -39,6 +39,7 @@ export const Secondary24 = () => (
     size={'24px'}
   ></StyledSpinner>
 )
+
 export const Secondary32 = () => (
   <StyledSpinner
     borderColorTop={BorderColors.Primary50}
