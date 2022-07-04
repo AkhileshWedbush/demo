@@ -2,12 +2,11 @@ import styled from 'styled-components'
 
 export const RootContainer = styled.div`
   margin: -8px 0px 8px 0px;
-   width: 100%; 
+  width: 100%;
   display: flex;
   flex-direction: column;
   justify-content: center;
   align-items: center;
-
 
   /* background-color: orange; */
 `
@@ -23,9 +22,9 @@ export const StyledPanelSelect = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items:flex-start;
+  align-items: flex-start;
   background: #fcfdff;
-  `
+`
 
 export const StyledPanelHead = styled.div`
   width: 100%;
@@ -72,14 +71,14 @@ export const StyledPanelMonthSelect = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: flex-start;
-  align-items:flex-start;
+  align-items: flex-start;
   background: #fcfdff;
 `
 
 export const StyledSelectWrapper = styled.div`
   width: 100%;
   padding: 8px 24px 8px 24px;
-  flex-wrap:wrap;
+  flex-wrap: wrap;
   font-style: normal;
   font-weight: 400;
   font-size: 16px;
@@ -98,17 +97,19 @@ export const StyledSelectWrapper = styled.div`
 
 export const StyledTableContainer = styled.div`
   width: 100%;
-    margin-top:20px;
+  margin-top: 20px;
   padding: 24px;
-  background: #fcfdff; 
+  background: #fcfdff;
   border: 1px solid #d0d7e2;
   box-sizing: border-box;
-  overflow-x:scroll; 
+  overflow-x: scroll;
   box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);
   border-radius: 8px 8px 8px 8px;
 `
 export const CardContainer = styled.div`
   flex: 1 1 auto;
+  font-weight: 400;
+  font-size: 16px;
   display: flex;
   flex-direction: column;
   justify-content: start;
@@ -122,7 +123,7 @@ export const CardContainer = styled.div`
   border-radius: 8px;
   background-color: #fafbfc;
   margin-left: 0px;
- margin-bottom: 16px;
+  margin-bottom: 16px;
 
   p {
     color: 374253;
@@ -131,4 +132,16 @@ export const CardContainer = styled.div`
     font-size: 16px;
     line-height: 24px;
   }
+`
+export const PopUpStyle = styled.div`
+background: #A7AFBC;
+position: absolute;
+width: 70%;
+height: 100%;
+marginTop: 100px;
+overflow: auto;
+padding: 24px 32px 24px 32px;
+display: flex;
+box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);
+border-radius: 8px;
 `

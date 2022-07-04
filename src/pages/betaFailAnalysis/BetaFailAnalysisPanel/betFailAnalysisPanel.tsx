@@ -9,6 +9,7 @@ import {
   StyledTableContainer,
   StyledPanelSelect,
   StyledSelectWrapper,
+  PopUpStyle,
 } from './styles'
 import { RootContainerTable, StyledTable } from './table/styles'
 import { Primary24 } from '../../../components/spinner/Spinner.stories'
@@ -133,7 +134,7 @@ const BetaFailAnalysisPanel = () => {
     return (
       <>
         <h5>to view previous comments</h5>
-        <Button
+        <a href='#popup'>  {<Button
           bgColor="#1F5EB7"
           color="#FFFFFF"
           height="35px"
@@ -142,7 +143,7 @@ const BetaFailAnalysisPanel = () => {
           onClick={() => {
             savedComments(tb)
           }}
-        />
+        />}</a>
       </>
     )
   }
@@ -716,19 +717,9 @@ const BetaFailAnalysisPanel = () => {
             </CardContainer>
           )}
           {data.betaReport && action === 'search'  && (
-            <StyledTableContainer>
+            <StyledTableContainer id="popup">
               {open && (
-                <div
-                  style={{
-                    background: '#A7AFBC',
-                    position: 'absolute',
-                    width: '70%',
-                    height: '100%',
-                    marginTop: '100px',
-                    overflow: 'auto',
-                    padding: '30px',
-                  }}
-                >
+                <PopUpStyle >
                   <StyledTable>
                     <RootContainerTable>
                       <button
@@ -768,13 +759,13 @@ const BetaFailAnalysisPanel = () => {
                               )
                             })
                           ) : (
-                            <h3 style={{ margin: '50%' }}>"No Comments"</h3>
+                            <h3 style={{ margin: '10%' }}>"No Comments"</h3>
                           )}
                         </tbody>
                       </table>
                     </RootContainerTable>
                   </StyledTable>
-                </div>
+                </PopUpStyle>
               )}
               <BetaTable
                 data={data.betaReport}
