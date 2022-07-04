@@ -1,3 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable prefer-const */
 import axios, { AxiosError, AxiosInstance, AxiosRequestConfig } from 'axios';
 
@@ -33,4 +35,5 @@ authApiCall = axios.create({
 export {
   apiCall,
   authApiCall,
+  baseURL
 };

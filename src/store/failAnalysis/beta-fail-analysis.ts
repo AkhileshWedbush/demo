@@ -11,6 +11,7 @@ import { authApiCall } from '../../utils/api'
 interface State {
   csv: string
   betaFailAnalysis: []
+  selectedRow:[]
   comments: []
   totalCount: number
   isLoading: boolean
@@ -19,6 +20,7 @@ interface State {
 
 let initialState: State = {
   betaFailAnalysis: [],
+  selectedRow:[],
   comments: [],
   totalCount: 0,
   isLoading: false,
@@ -32,6 +34,9 @@ const { actions, reducer }: Slice = createSlice({
   reducers: {
     SetBetaFailAnalysis: (state: State, action: PayloadAction<any>) => {
       state.betaFailAnalysis = action.payload.data
+    },
+    setSelectedRow: (state: State, action: PayloadAction<any>) => {
+      state.selectedRow = action.payload.data
     },
     setComments: (state: State, action: PayloadAction<any>) => {
       console.log('hi')
@@ -54,6 +59,7 @@ export const {
   setIsLoading,
   setReturnMailAndEmailReportCSV,
   setComments,
+  setSelectedRow,
 } = actions
 
 /**
@@ -136,6 +142,7 @@ export const getComments: any =
 export const getBetaFailAnalysis: any =
   (
     action: string,
+    report_Type:string,
     fromDate: string,
     toDate: string,
     ageFilter: string,
@@ -161,6 +168,7 @@ export const getBetaFailAnalysis: any =
       const { data, status } = await authApiCall.post(
         'FailAnalysisReport/GetBetaFailAnalysisHistoryReport',
         {
+          report_Type,
           fromDate,
           toDate,
           ageFilter,
@@ -196,10 +204,69 @@ export const getBetaFailAnalysis: any =
         })
       )
     }
+    
+  }
+  export const getSelectedRow: any =
+  (
+    report_Type:string,
+    fromDate: string,
+    toDate: string,
+    ageFilter: string,
+    accountNumber: string,
+    branch: string,
+    subsidiaryNumber: string,
+    buySell: string,
+    cusip: string,
+    pageNumber: number=0,
+    pageSize: number = 1,
+    sortBy: string = 'SnapShotDate, Age',
+    sortDirection: string = 'ASC',
+    searchFilter: string = ''
+  ) =>
+  async (dispatch: Dispatch) => {
+    dispatch(
+      SetBetaFailAnalysis({
+        data: '',
+      })
+    )
+    try {
+      const { data, status } = await authApiCall.post(
+        'FailAnalysisReport/GetBetaFailAnalysisHistoryReport',
+        {
+          report_Type,
+          fromDate,
+          toDate,
+          ageFilter,
+          accountNumber,
+          branch,
+          subsidiaryNumber,
+          buySell,
+          cusip,
+          pageNumber,
+          pageSize,
+          sortBy,
+          sortDirection,
+          searchFilter,
+        }
+      )
+
+      if (status === 200) {
+        dispatch(
+          setSelectedRow({
+            data: data,
+          })
+        )
+      }
+    } catch (e: any) {
+      console.log('null')
+    }
+    
   }
 
 export const betaFailAnalysisDataSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.betaFailAnalysis
+  export const selectedRowDataSelector = (store: StoreState) =>
+  store.failAnalysis.betafailanalysis.selectedRow
 export const actionSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.action
 export const errorSelector = (store: StoreState) =>

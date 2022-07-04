@@ -1,10 +1,11 @@
 import { FC } from 'react'
-import { Routes, Route } from 'react-router-dom'
+import { Routes, Route, Link } from 'react-router-dom'
 import NoMatchPage from './pages/noMatchPage/NoMatchPage'
 import LogOnPage from './pages/logOnPage/LogOnPage'
 import HomePage from './pages/HomePage'
 import BetaFailAnalysis from './pages/betaFailAnalysis/betaFailAnalysisPage'
 import LandingPage from './pages/landingPage/LandingPage'
+import UserComments from './pages/betaFailAnalysis/BetaFailAnalysisPanel/userComments'
 
 const App: FC = () => {
   return (
@@ -12,6 +13,7 @@ const App: FC = () => {
     <Route path="/" element={<HomePage />}>
     <Route index element={<LandingPage />} />
       <Route path="BetaFailTracking" element={<BetaFailAnalysis />} />
+      <Route path="BetaFailTracking/usercomments" element={<UserComments />} />
     </Route>
     <Route path="logOn" element={<LogOnPage />} />
     <Route path="*" element={<NoMatchPage />} />
