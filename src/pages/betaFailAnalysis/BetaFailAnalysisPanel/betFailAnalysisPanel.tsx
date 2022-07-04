@@ -1,3 +1,4 @@
+/* eslint-disable react/no-unescaped-entities */
 /* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
@@ -9,6 +10,7 @@ import {
   StyledPanelSelect,
   StyledSelectWrapper,
 } from './styles'
+import { RootContainerTable, StyledTable } from './table/styles'
 import { Primary24 } from '../../../components/spinner/Spinner.stories'
 import './table/dropdown.css'
 import { useState } from 'react'
@@ -16,9 +18,9 @@ import Select from 'react-select'
 import { Textbox } from '../../../components/textbox/Textbox'
 import Button from '../../../components/button/Button'
 import { userComment } from './table/TableData'
-import { Link, useNavigate } from 'react-router-dom'
 import BetaTable from './table/AccountActivityTable'
 import Label from '../../../components/label/Label'
+import { TableColumnSelected } from './table/SelectedColumn'
 import {
   actionSelector,
   getBetaFailAnalysis,
@@ -28,19 +30,21 @@ import {
   commentSelector,
   getUserComment,
   getSelectedRow,
+  selectedRowDataSelector,
 } from '../../../store/failAnalysis/beta-fail-analysis'
 import { betaFailAnalysisDataSelector } from '../../../store/failAnalysis/beta-fail-analysis'
 import { useSelector, useDispatch } from 'react-redux'
 
 const BetaFailAnalysisPanel = () => {
-  const navigatiton = useNavigate()
   const dispatch = useDispatch()
+  const selectedRow = useSelector(selectedRowDataSelector)
   const com = useSelector(commentSelector)
   const data = useSelector(betaFailAnalysisDataSelector)
   const buffering = useSelector(isLoadingSelector)
   const action = useSelector(actionSelector)
   const [inputComment, setInputComment] = useState<any>(userComment)
   const [loading, setLoading] = useState<boolean>(false)
+  const [open, setOpen] = useState<boolean>(false)
   const [ageRange, setAgeRange] = useState<any>('')
   const [buySell, setBuySell] = useState<any>('')
   const [type, setType] = useState<any>({
@@ -76,25 +80,25 @@ const BetaFailAnalysisPanel = () => {
   //console.log( inputComment[0].comments)
 
   const savedComments = async (tb: any) => {
+    setLoading(true)
     await dispatch(
       getComments(type.value, data.betaReport[tb.cell.row.id].failUniqueId)
     )
-      await dispatch(
-        getSelectedRow(
-          type.value,
-          input.startDate,
-          input.endDate,
-          ageRange.value,
-          data.betaReport[tb.cell.row.id].accountNumber.toString(),
-          input.branch,
-          data.betaReport[tb.cell.row.id].subsidiaryNumber.toString(),
-          buySell.value,
-          data.betaReport[tb.cell.row.id].cusip.trim(),
-        )
+    await dispatch(
+      getSelectedRow(
+        type.value,
+        input.startDate,
+        input.endDate,
+        ageRange.value,
+        data.betaReport[tb.cell.row.id].accountNumber.toString(),
+        input.branch,
+        data.betaReport[tb.cell.row.id].subsidiaryNumber.toString(),
+        buySell.value,
+        data.betaReport[tb.cell.row.id].cusip.trim()
       )
-  
-
-    navigatiton('usercomments')
+    )
+    setLoading(false)
+    setOpen(true)
   }
 
   // const histocialComments = (tb: any) => {
@@ -149,6 +153,7 @@ const BetaFailAnalysisPanel = () => {
     user: string,
     rowId: number
   ) => {
+  
     await dispatch(
       getUserComment(type, failId, comment, user, input.commentDate)
     )
@@ -188,9 +193,8 @@ const BetaFailAnalysisPanel = () => {
                   'me',
                   tb.cell.row.id
                 )
-              }}
-              title="Submit"
-            />
+              } }
+              title="Submit" />
           ) : (
             <Button
               bgColor="#A7AFBC"
@@ -208,7 +212,7 @@ const BetaFailAnalysisPanel = () => {
   const handleSearch = async (firstPage: number) => {
     setInput({ ...input, pageNumber: 0 })
     console.log(input.pageNumber)
-    await dispatch(
+    const data = await dispatch(
       getBetaFailAnalysis(
         'search',
         type.value,
@@ -223,19 +227,23 @@ const BetaFailAnalysisPanel = () => {
         firstPage
       )
     )
+    //console.log(data)
+    // setInputComment(data.betaReport)
     setLoading(true)
   }
-  // const handle = async () => {
-  //   //console.log(data.betaReport[0].failUniqueId)
-  //   // const hi = await dispatch(getComments('daily', '202201051062186B'))
-  //   // // console.log(hi)
-  //   // setComment({ comments: hi[2].comment })
-  //   // console.log(hi[2], hi[2].comment)
-  //   // console.log(comment.comments)
-  //   // console.log(Object.keys(hi).length)
-
-  //   //console.log(comment)
-  // }
+  const handle = async () => {
+    alert('comment Added')
+    // inputComment[0].commentss=""
+    // setInputComment([...inputComment, inputComment[0].commentss])
+    // console.log(inputComment[0].commentess)
+    // const hi = await dispatch(getComments('daily', '202201051062186B'))
+    // // console.log(hi)
+    // setComment({ comments: hi[2].comment })
+    // console.log(hi[2], hi[2].comment)
+    // console.log(comment.comments)
+    // console.log(Object.keys(hi).length)
+    //console.log(comment)
+  }
 
   const NavigationGetRecord = async (updatedPage: number) => {
     await dispatch(
@@ -512,6 +520,10 @@ const BetaFailAnalysisPanel = () => {
       Header: 'Row Version',
       accessor: 'rowVersion',
     },
+    {
+      Header: 'All Comments',
+      Cell: dailyComments,
+    },
 
     // {
     //   Header: 'Comments',
@@ -643,16 +655,16 @@ const BetaFailAnalysisPanel = () => {
             style={{ display: 'flex', justifyContent: 'flex-end' }}
           >
             <div>
-              {/* <Button
+              <Button
                 bgColor="#1F5EB7"
                 color="#FFFFFF"
                 height="35px"
                 width="80px"
                 onClick={() => {
-                  savedComments()
+                  handle()
                 }}
                 title="null"
-              /> */}
+              />
               <Button
                 bgColor="#1F5EB7"
                 color="#FFFFFF"
@@ -679,7 +691,7 @@ const BetaFailAnalysisPanel = () => {
             </div>
           </StyledSelectWrapper>
 
-          {loading && type.value === 'daily' && (
+          { action === 'search' && type.value === 'daily' && (
             <CardContainer style={{ width: '50%' }}>
               <h3>Fail Summary</h3>
               <div style={{ width: '100%' }}>
@@ -703,19 +715,76 @@ const BetaFailAnalysisPanel = () => {
               </div>
             </CardContainer>
           )}
-          {data.betaReport && action === 'search' && loading && (
-            <RootContainer>
-              <StyledTableContainer>
-                <BetaTable
-                  data={data.betaReport}
-                  columns={
-                    type.value === 'daily'
-                      ? TableColumnsDaily
-                      : TableColumnsHistorical
-                  }
-                />
-              </StyledTableContainer>
-            </RootContainer>
+          {data.betaReport && action === 'search'  && (
+            <StyledTableContainer>
+              {open && (
+                <div
+                  style={{
+                    background: '#A7AFBC',
+                    position: 'absolute',
+                    width: '70%',
+                    height: '100%',
+                    marginTop: '100px',
+                    overflow: 'auto',
+                    padding: '30px',
+                  }}
+                >
+                  <StyledTable>
+                    <RootContainerTable>
+                      <button
+                        onClick={() => {
+                          setOpen(false)
+                        }}
+                      >
+                        close
+                      </button>
+                      <StyledTableContainer>
+                        <div>
+                          <BetaTable
+                            data={selectedRow.betaReport}
+                            columns={TableColumnSelected}
+                          />
+                        </div>
+                      </StyledTableContainer>
+                      <table>
+                        <thead>
+                          <tr>
+                            <th>system</th>
+                            <th>comment</th>
+                            <th>createdBy</th>
+                            <th>createdOn</th>
+                          </tr>
+                        </thead>
+                        <tbody>
+                          {com != 'NULL' ? (
+                            com.map((element: any, index: any) => {
+                              return (
+                                <tr key={index}>
+                                  <td>{element.system}</td>
+                                  <td>{element.comment}</td>
+                                  <td>{element.createdBy}</td>
+                                  <td>{element.createdOn}</td>
+                                </tr>
+                              )
+                            })
+                          ) : (
+                            <h3 style={{ margin: '50%' }}>"No Comments"</h3>
+                          )}
+                        </tbody>
+                      </table>
+                    </RootContainerTable>
+                  </StyledTable>
+                </div>
+              )}
+              <BetaTable
+                data={data.betaReport}
+                columns={
+                  type.value === 'daily'
+                    ? TableColumnsDaily
+                    : TableColumnsHistorical
+                }
+              />
+            </StyledTableContainer>
           )}
         </StyledPanelSelect>
       </RootContainer>

@@ -1,6 +1,6 @@
 import styled from 'styled-components'
 
-export const RootContainer = styled.div`
+export const RootContainerTable = styled.div`
   /* background-color: pink; */
   table {
     width: 100% !important;
@@ -14,7 +14,7 @@ export const RootContainer = styled.div`
       font-weight: 700;
       font-size: 12px;
       line-height: 16px;
-
+      color:black;
       text-align: left;
       border-radius: 1px;
       padding: 4px 4px;
@@ -33,7 +33,7 @@ export const RootContainer = styled.div`
     tr {
       td {
         padding: 8px 9px;
-
+         color:black;
         font-style: normal;
         font-weight: 400;
         font-size: 14px;
@@ -57,4 +57,14 @@ export const RootContainer = styled.div`
       }
     }
   }
+`
+export const StyledTable = styled.div`
+    margin-top:20px;
+  padding: 24px;
+  background: #fcfdff; 
+  border: 1px solid #d0d7e2;
+  box-sizing: border-box;
+  overflow-x:scroll; 
+  box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);
+  border-radius: 8px 8px 8px 8px;
 `

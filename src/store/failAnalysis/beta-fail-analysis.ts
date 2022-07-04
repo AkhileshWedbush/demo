@@ -152,7 +152,7 @@ export const getBetaFailAnalysis: any =
     buySell: string,
     cusip: string,
     pageNumber: number,
-    pageSize: number = 20,
+    pageSize: number = 10,
     sortBy: string = 'SnapShotDate, Age',
     sortDirection: string = 'ASC',
     searchFilter: string = ''
@@ -193,7 +193,7 @@ export const getBetaFailAnalysis: any =
           })
         )
         dispatch(setIsLoading(false))
-        return true
+        return data
       }
     } catch (e: any) {
       console.log('null')
@@ -218,17 +218,12 @@ export const getBetaFailAnalysis: any =
     buySell: string,
     cusip: string,
     pageNumber: number=0,
-    pageSize: number = 1,
+    pageSize: number =0,
     sortBy: string = 'SnapShotDate, Age',
     sortDirection: string = 'ASC',
     searchFilter: string = ''
   ) =>
   async (dispatch: Dispatch) => {
-    dispatch(
-      SetBetaFailAnalysis({
-        data: '',
-      })
-    )
     try {
       const { data, status } = await authApiCall.post(
         'FailAnalysisReport/GetBetaFailAnalysisHistoryReport',

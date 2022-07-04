@@ -2,7 +2,6 @@
 import { commentSelector,selectedRowDataSelector } from '../../../store/failAnalysis/beta-fail-analysis'
 import BetaTable from './table/AccountActivityTable'
 import { useSelector } from 'react-redux'
-import { RootContainer } from './table/styles'
 import { StyledTableContainer } from './styles'
 
 const UserComments = () => {
@@ -142,7 +141,7 @@ const UserComments = () => {
           </div>
     </StyledTableContainer>     
     <StyledTableContainer>
-    <RootContainer>
+
 
       <table style={{ color: 'black' }}>
         <thead>
@@ -167,7 +166,6 @@ const UserComments = () => {
             }):<h3 style={{margin:'50%'}}>"NULL"</h3>}
         </tbody>
       </table>
-    </RootContainer>
     </StyledTableContainer>
     </>
   )

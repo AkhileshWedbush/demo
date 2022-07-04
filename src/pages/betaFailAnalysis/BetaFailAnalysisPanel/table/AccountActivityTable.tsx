@@ -5,7 +5,7 @@
 import { useTable,useSortBy } from 'react-table'
 import { useMemo } from 'react'
 
-import { RootContainer } from './styles'
+import {RootContainerTable} from './styles'
  
 
 
@@ -55,9 +55,9 @@ const CreateTable = (props: any) => {
 
 const BetaTable = (props: any) => {
   return (
-    <RootContainer>
+    <RootContainerTable>
       <CreateTable data={props.data} columns={props.columns} />
-    </RootContainer>
+    </RootContainerTable>
   )
 }
 
