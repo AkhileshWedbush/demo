@@ -1,23 +1,22 @@
 import React from 'react'
 import LandingPageLayout from '../../components/layouts/landingPage/LandingPageLayout'
 import { RootContainer } from './styles'
-
-import BetaFailAnalysisPanel from './BetaFailAnalysisPanel/betFailAnalysisPanel'
+import BetaFailAnalysisHistory from './BetaFailAnalysisPanel/betaFailAnalysisHistory'
 
 const BetaFailAnalysisContent = () => {
   return (
-    <RootContainer id="T2">
-      <BetaFailAnalysisPanel />
+    <RootContainer id="T3">
+      <BetaFailAnalysisHistory />
     </RootContainer>
   )
 }
 
-const BetaFailAnalysis = () => {
+const BetaFailHistory = () => {
   return (
     <LandingPageLayout>
       <BetaFailAnalysisContent />
     </LandingPageLayout>
   )
-}
+} 
 
-export default BetaFailAnalysis
+export default BetaFailHistory

@@ -3,16 +3,16 @@
 /* eslint-disable react/jsx-key */
 
 import { useTable,useSortBy } from 'react-table'
-import { useMemo } from 'react'
+
 
 import {RootContainerTable} from './styles'
  
 
 
 const CreateTable = (props: any) => {
-  const data = useMemo(() =>props.data,[])
+  const data = props.data
 
-  const columns = useMemo(() =>props.columns,[])
+  const columns =props.columns
 
   const { getTableProps, getTableBodyProps, headerGroups, rows, prepareRow } =
     useTable({ columns, data },useSortBy)

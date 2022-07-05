@@ -32,7 +32,7 @@ export const RootContainerTable = styled.div`
 
     tr {
       td {
-        padding: 8px 9px;
+        padding: 2px 2px;
          color:black;
         font-style: normal;
         font-weight: 400;

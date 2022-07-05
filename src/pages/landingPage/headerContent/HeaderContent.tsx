@@ -34,7 +34,7 @@ const HeaderContent = (Props: HeaderContentProps) => {
     <RootContainer>
       <PageHeadingWrapper>
         <StyledToggleControl>
-        <h3>Operation Hub</h3>
+        <h2>Operation Hub</h2>
           <StyledSliderToggle onClick={Props.toggleMenuHandler}>
             {isSideMenuOpen ? (
               <img src={Icons.ChevronLeft} alt="toggle" />

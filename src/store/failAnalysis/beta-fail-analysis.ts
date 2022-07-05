@@ -12,7 +12,6 @@ interface State {
   csv: string
   betaFailAnalysis: []
   selectedRow:[]
-  comments: []
   totalCount: number
   isLoading: boolean
   action: string
@@ -21,7 +20,6 @@ interface State {
 let initialState: State = {
   betaFailAnalysis: [],
   selectedRow:[],
-  comments: [],
   totalCount: 0,
   isLoading: false,
   csv: '',
@@ -38,11 +36,6 @@ const { actions, reducer }: Slice = createSlice({
     setSelectedRow: (state: State, action: PayloadAction<any>) => {
       state.selectedRow = action.payload.data
     },
-    setComments: (state: State, action: PayloadAction<any>) => {
-      console.log('hi')
-      console.log(action.payload)
-      state.comments = action.payload.data
-    },
     setIsLoading: (state: State, action: PayloadAction<boolean>) => {
       state.isLoading = action.payload
     },
@@ -58,7 +51,6 @@ export const {
   SetBetaFailAnalysis,
   setIsLoading,
   setReturnMailAndEmailReportCSV,
-  setComments,
   setSelectedRow,
 } = actions
 
@@ -78,7 +70,7 @@ export const getAction: any =
       })
     )
   }
-export const getUserComment: any =
+export const putUserComment: any =
   ( 
   
     system: string,
@@ -106,39 +98,10 @@ export const getUserComment: any =
       }
     } catch {
       //console.log(null)
+      return [];
     }
   }
-export const getComments: any =
-  (system: string, failUniqueId: string) => async (dispatch: Dispatch) => {
-    console.log('test1')
-    try {
-      const { data, status } = await authApiCall.get(
-        'FailAnalysisReport/GetComments',
-        {
-          params: {
-            system,
-            failUniqueId,
-          },
-        }
-      )
 
-      if (status === 200) {
-        dispatch(
-          setComments({
-            data: data,
-          })
-        )
-        return data
-      }
-    } catch {
-      dispatch(
-        setComments({
-          data: 'NULL',
-        })
-      )
-      //console.log(null)
-    }
-  }
 export const getBetaFailAnalysis: any =
   (
     action: string,
@@ -268,6 +231,4 @@ export const errorSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.error
 export const isLoadingSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.isLoading
-export const commentSelector = (store: StoreState) =>
-  store.failAnalysis.betafailanalysis.comments
 export default reducer

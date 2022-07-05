@@ -12,7 +12,7 @@ export const RootContainer = styled.div`
 `
 export const StyledPanelSelect = styled.div`
   width: 100%;
-  padding: 24px 32px 24px 32px;
+  padding: 20px 30px 20px 30px;
   border-radius: 0px 0px 8px 8px;
   font-style: normal;
   font-weight: 400;
