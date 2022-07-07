@@ -26,7 +26,7 @@ import {
 } from '../../../store/failAnalysis/beta-fail-analysis'
 import { betaFailAnalysisDataSelector } from '../../../store/failAnalysis/beta-fail-analysis'
 import { useSelector, useDispatch } from 'react-redux'
-import { useNavigate } from 'react-router-dom'
+import { Link, useNavigate } from 'react-router-dom'
 import { getComments} from '../../../store/failAnalysis/beta-fail-analysis-user'
 
 const BetaFailAnalysisHistory = () => {
@@ -103,7 +103,7 @@ const BetaFailAnalysisHistory = () => {
   const previousComments = (tb: any) => {
     return (
       <>
-      <div onClick={()=>savedComments(tb)}>hi</div>
+      <Link to={''}><div onClick={()=>savedComments(tb)}>Comment</div></Link>
     </>
       
       
