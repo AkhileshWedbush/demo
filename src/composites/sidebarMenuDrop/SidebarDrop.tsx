@@ -62,7 +62,7 @@ const SidebarDrop = ({
                 fontSize={'1rem'}
                 fontStyle={'regular'}
                 lineHeight={'1.5rem'}
-                fontWeight={400}
+                fontWeight={700}
                 color={''}
                 label={label}
               />

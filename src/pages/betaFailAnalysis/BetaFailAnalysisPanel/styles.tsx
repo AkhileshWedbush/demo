@@ -97,7 +97,6 @@ export const StyledSelectWrapper = styled.div`
 
 export const StyledTableContainer = styled.div`
   width: 100%;
-  margin-top: 20px;
   padding: 24px;
   background: #fcfdff;
   border: 1px solid #d0d7e2;

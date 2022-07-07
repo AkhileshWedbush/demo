@@ -32,7 +32,8 @@ export const Wrapper = styled.div`
   color: ${Colors.Primary50};
 
   &:hover {
-    background-color: ${Colors.Gray10};
+    background-color: ${Colors. Primary80};
+    color: ${Colors.White};
   }
 `
 

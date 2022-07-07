@@ -1,3 +1,5 @@
+/* eslint-disable jsx-a11y/no-static-element-interactions */
+/* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import {
   CardContainer,
@@ -107,7 +109,7 @@ const BetaFailAnalysisDaily = () => {
     return (
       <>
         <Link to={''}>
-          <div onClick={() => savedComments(tb)}>Click Here</div>
+          <div onClick={() => savedComments(tb)}>View comments</div>
         </Link>
       </>
     )
@@ -305,38 +307,7 @@ const BetaFailAnalysisDaily = () => {
       Header: 'ID',
       accessor: 'id',
     },
-    {
-      Header: 'Created BY',
-      accessor: 'createdBy',
-    },
-    {
-      Header: 'Created On',
-      accessor: 'createdOn',
-    },
-    {
-      Header: 'Updated By',
-      accessor: 'updateBy',
-    },
-    {
-      Header: 'Updated On',
-      accessor: 'updateOn',
-    },
-    {
-      Header: 'Deleted',
-      accessor: 'isDeleted',
-    },
-    {
-      Header: 'Deleted By',
-      accessor: 'deletedBy',
-    },
-    {
-      Header: 'Deleted On',
-      accessor: 'deletedOn',
-    },
-    {
-      Header: 'Row Version',
-      accessor: 'rowVersion',
-    },
+
   ]
 
   return (
@@ -484,10 +455,10 @@ const BetaFailAnalysisDaily = () => {
 
           {action === 'search' && (
             <CardContainer style={{ width: '50%' }}>
-              <StyledPanelHeadTitle>
+              <StyledPanelHead>
                 <h4>Fail Summary</h4>
                 {buffering && <Primary24></Primary24>}
-              </StyledPanelHeadTitle>
+              </StyledPanelHead>
               <div style={{ width: '100%' }}>
                 <StyledTableContainer>
                   <BetaTable
@@ -507,8 +478,9 @@ const BetaFailAnalysisDaily = () => {
                       },
                     ]}
                   />
-                  <h5>Total Quantity:{data.vSum_Quantity}</h5>
-                  <h5>Total Amount:$ {data.vSum_SumAmount}</h5>
+                  <br></br>
+                  <h5>Total Quantity: {data.vSum_Quantity}</h5>
+                  <h5>Total Amount: $ {data.vSum_SumAmount}</h5>
                 </StyledTableContainer>
               </div>
             </CardContainer>

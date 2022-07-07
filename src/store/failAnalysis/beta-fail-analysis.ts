@@ -11,7 +11,7 @@ import { authApiCall } from '../../utils/api'
 interface State {
   csv: string
   betaFailAnalysis: []
-  selectedRow:[]
+  selectedRow: []
   totalCount: number
   isLoading: boolean
   action: string
@@ -19,7 +19,7 @@ interface State {
 
 let initialState: State = {
   betaFailAnalysis: [],
-  selectedRow:[],
+  selectedRow: [],
   totalCount: 0,
   isLoading: false,
   csv: '',
@@ -71,8 +71,7 @@ export const getAction: any =
     )
   }
 export const putUserComment: any =
-  ( 
-  
+  (
     system: string,
     failUniqueId: string,
     comment: string,
@@ -98,14 +97,14 @@ export const putUserComment: any =
       }
     } catch {
       //console.log(null)
-      return [];
+      return []
     }
   }
 
 export const getBetaFailAnalysis: any =
   (
     action: string,
-    report_Type:string,
+    report_Type: string,
     fromDate: string,
     toDate: string,
     ageFilter: string,
@@ -167,11 +166,10 @@ export const getBetaFailAnalysis: any =
         })
       )
     }
-    
   }
-  export const getSelectedRow: any =
+export const getSelectedRow: any =
   (
-    report_Type:string,
+    report_Type: string,
     fromDate: string,
     toDate: string,
     ageFilter: string,
@@ -180,8 +178,8 @@ export const getBetaFailAnalysis: any =
     subsidiaryNumber: string,
     buySell: string,
     cusip: string,
-    pageNumber: number=0,
-    pageSize: number =0,
+    pageNumber: number = 0,
+    pageSize: number = 0,
     sortBy: string = 'SnapShotDate, Age',
     sortDirection: string = 'ASC',
     searchFilter: string = ''
@@ -218,12 +216,11 @@ export const getBetaFailAnalysis: any =
     } catch (e: any) {
       console.log('null')
     }
-    
   }
 
 export const betaFailAnalysisDataSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.betaFailAnalysis
-  export const selectedRowDataSelector = (store: StoreState) =>
+export const selectedRowDataSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.selectedRow
 export const actionSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.action

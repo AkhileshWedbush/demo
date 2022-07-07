@@ -103,7 +103,7 @@ const BetaFailAnalysisHistory = () => {
   const previousComments = (tb: any) => {
     return (
       <>
-      <Link to={''}><div onClick={()=>savedComments(tb)}>Comment</div></Link>
+      <Link to={''}><div onClick={()=>savedComments(tb)}>View comments</div></Link>
     </>
       
       
@@ -243,38 +243,6 @@ const BetaFailAnalysisHistory = () => {
     {
       Header: 'ID',
       accessor: 'id',
-    },
-    {
-      Header: 'Created BY',
-      accessor: 'createdBy',
-    },
-    {
-      Header: 'Created On',
-      accessor: 'createdOn',
-    },
-    {
-      Header: 'Updated By',
-      accessor: 'updateBy',
-    },
-    {
-      Header: 'Updated On',
-      accessor: 'updateOn',
-    },
-    {
-      Header: 'Deleted',
-      accessor: 'isDeleted',
-    },
-    {
-      Header: 'Deleted By',
-      accessor: 'deletedBy',
-    },
-    {
-      Header: 'Deleted On',
-      accessor: 'deletedOn',
-    },
-    {
-      Header: 'Row Version',
-      accessor: 'rowVersion',
     },
   ]
 

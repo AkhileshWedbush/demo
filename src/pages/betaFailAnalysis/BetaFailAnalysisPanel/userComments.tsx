@@ -16,10 +16,10 @@ import { StyledTableContainer } from './styles'
       <table style={{ color: 'black' }}>
         <thead>
           <tr>
-            <th>failUniqueId</th>
-            <th>comment</th>
-            <th>createdBy</th>
-            <th>createdOn</th>
+            <th>FailUniqueId</th>
+            <th>Comment</th>
+            <th>CreatedBy</th>
+            <th>CreatedOn</th>
           </tr>
         </thead>
         <tbody>
