@@ -83,7 +83,7 @@ export const putUserComment: any =
     console.log('test1')
     try {
       const { data, status } = await authApiCall.post(
-        'FailAnalysisReport/AddComment',
+        'opsfailprocessapi/FailAnalysisReport/AddComment',
         {
           system,
           failUniqueId,
@@ -129,7 +129,7 @@ export const getBetaFailAnalysis: any =
     )
     try {
       const { data, status } = await authApiCall.post(
-        'FailAnalysisReport/GetBetaFailAnalysisHistoryReport',
+        'opsfailprocessapi/FailAnalysisReport/GetBetaFailAnalysisReport',
         {
           report_Type,
           fromDate,
@@ -189,7 +189,7 @@ export const getBetaFailAnalysis: any =
   async (dispatch: Dispatch) => {
     try {
       const { data, status } = await authApiCall.post(
-        'FailAnalysisReport/GetBetaFailAnalysisHistoryReport',
+        'opsfailprocessapi/FailAnalysisReport/GetBetaFailAnalysisReport',
         {
           report_Type,
           fromDate,

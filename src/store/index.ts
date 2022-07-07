@@ -1,6 +1,7 @@
+
 import { configureStore, Store ,combineReducers,} from '@reduxjs/toolkit';
- import {failAnalysisReducer} from './failAnalysis'
- import {persistReducer,persistStore} from "redux-persist";
+import {failAnalysisReducer} from './failAnalysis'
+import {persistReducer,persistStore} from "redux-persist";
  import storage from "redux-persist/lib/storage";
  import betaFailAnalysisUser from './failAnalysis/beta-fail-analysis-user'
 

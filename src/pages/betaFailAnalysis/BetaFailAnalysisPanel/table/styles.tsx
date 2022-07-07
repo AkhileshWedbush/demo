@@ -12,7 +12,7 @@ export const RootContainerTable = styled.div`
       white-space: nowrap;
       font-style: normal;
       font-weight: 700;
-      font-size: 12px;
+      font-size: 15px;
       line-height: 16px;
       color:black;
       text-align: left;

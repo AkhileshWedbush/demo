@@ -1,20 +1,14 @@
-/* eslint-disable @typescript-eslint/no-inferrable-types */
-
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StoreState } from '../index'
-
-/* eslint-disable prefer-const */
-
 import { createSlice, Dispatch, PayloadAction, Slice } from '@reduxjs/toolkit'
 import { authApiCall } from '../../utils/api'
 
 interface State {
-  comments: []
+  comments: any
 }
 
-let initialState: State = {
+const initialState: State = {
   comments: [],
- 
 }
 
 const { actions, reducer }: Slice = createSlice({
@@ -29,24 +23,15 @@ const { actions, reducer }: Slice = createSlice({
   },
 })
 
-export const {
-  setComments,
-} = actions
-
+export const { setComments } = actions
 
 export const getComments: any =
   (system: string, failUniqueId: string) => async (dispatch: Dispatch) => {
     console.log('test1')
 
     try {
-      const { data, status } = await authApiCall.get(
-        'FailAnalysisReport/GetComments',
-        {
-          params: {
-            system,
-            failUniqueId,
-          },
-        }
+      const { data, status } = await authApiCall.post(
+        `opsfailprocessapi/FailAnalysisReport/GetComments?system=${system}&failUniqueId=${failUniqueId}`
       )
 
       if (status === 200) {
@@ -55,6 +40,7 @@ export const getComments: any =
             data: data,
           })
         )
+        return status
       }
     } catch {
       dispatch(
@@ -62,10 +48,10 @@ export const getComments: any =
           data: [],
         })
       )
+      return true
       //console.log(null)
     }
   }
-
 
 export const commentSelector = (store: StoreState) =>
   store.failAnalysisUser.comments
