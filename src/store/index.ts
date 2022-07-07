@@ -3,18 +3,20 @@ import { configureStore, Store ,combineReducers,} from '@reduxjs/toolkit';
  import {persistReducer,persistStore} from "redux-persist";
  import storage from "redux-persist/lib/storage";
  import betaFailAnalysisUser from './failAnalysis/beta-fail-analysis-user'
+ import p3FailAnalysisUser from './failAnalysis/p3-fail-analysis-user'
 
 
 
  const reducer = combineReducers({
   failAnalysis:failAnalysisReducer,
-  failAnalysisUser:betaFailAnalysisUser
+  failAnalysisUser:betaFailAnalysisUser,
+  failAnalysisUserForP3:p3FailAnalysisUser
  })
 
  const persistConfig={
     key:"root",
     storage,
-    whitelist:["failAnalysisUser"]
+    whitelist:["failAnalysisUser","failAnalysisUserForP3"]
 }
 
  const persistRoot = persistReducer(persistConfig,reducer)
