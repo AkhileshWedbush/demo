@@ -28,7 +28,7 @@ import {
   getAction,
   putUserComment,
   getBetaEXCEL,
-  betaFailAnalysisDataSelector
+  betaFailAnalysisDataSelector,
 } from '../../../store/failAnalysis/beta-fail-analysis'
 import { useSelector, useDispatch } from 'react-redux'
 import { getComments } from '../../../store/failAnalysis/beta-fail-analysis-user'
@@ -210,7 +210,7 @@ const BetaFailAnalysisDaily = () => {
   }
   const DownloadEXCEL = async () => {
     setDownload(true)
-   await dispatch(
+    await dispatch(
       getBetaEXCEL(
         `BETA_${type.value}_${new Date().toISOString().split('T')[0]}`,
         type.value,
@@ -221,7 +221,7 @@ const BetaFailAnalysisDaily = () => {
         input.branch,
         input.subsidiaryNumber,
         buySell.value,
-        input.cusip,
+        input.cusip
       )
     )
     setDownload(false)
@@ -260,12 +260,12 @@ const BetaFailAnalysisDaily = () => {
       Header: 'Cusip',
       accessor: 'cusip',
     },
-   
+
     {
       Header: 'Sec Nbr',
       accessor: 'securityNumber',
     },
-    
+
     {
       Header: 'Symbol',
       accessor: 'nasdaqSymbol',
@@ -430,9 +430,7 @@ const BetaFailAnalysisDaily = () => {
                 handleSearch(0)
               }}
               title="Search"
-            >
-            
-            </Button>
+            ></Button>
             {buffering && <Primary24></Primary24>}
             <Button
               bgColor="#1F5EB7"

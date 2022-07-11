@@ -24,11 +24,11 @@ import {
   isLoadingSelector,
   getAction,
   getBetaEXCEL,
+  betaFailAnalysisDataSelector
 } from '../../../store/failAnalysis/beta-fail-analysis'
-import { betaFailAnalysisDataSelector } from '../../../store/failAnalysis/beta-fail-analysis'
 import { useSelector, useDispatch } from 'react-redux'
 import { Link, useNavigate } from 'react-router-dom'
-import { getComments} from '../../../store/failAnalysis/beta-fail-analysis-user'
+import { getComments } from '../../../store/failAnalysis/beta-fail-analysis-user'
 
 const BetaFailAnalysisHistory = () => {
   const dispatch = useDispatch()
@@ -89,33 +89,30 @@ const BetaFailAnalysisHistory = () => {
 
   const savedComments = async (tb: any) => {
     console.log('coming')
-   const status= await dispatch(
+    const status = await dispatch(
       getComments(type.value, data.betaReport[tb.cell.row.id].failUniqueId)
     )
-    
-    if(status){
-      window.open("/BetaFailTracking/comments")
+
+    if (status) {
+      window.open('/BetaFailTracking/comments')
     }
     console.log(status)
   }
 
-
-
   const previousComments = (tb: any) => {
     return (
       <>
-      <Link to={''}><div onClick={()=>savedComments(tb)}>View comments</div></Link>
-    </>
-      
-      
+        <Link to={''}>
+          <div onClick={() => savedComments(tb)}>View comments</div>
+        </Link>
+      </>
     )
   }
-
 
   const handleSearch = async (firstPage: number) => {
     setInput({ ...input, pageNumber: 0 })
     console.log(input.pageNumber)
-     await dispatch(
+    await dispatch(
       getBetaFailAnalysis(
         'search',
         type.value,
@@ -162,84 +159,84 @@ const BetaFailAnalysisHistory = () => {
         input.branch,
         input.subsidiaryNumber,
         buySell.value,
-        input.cusip,
+        input.cusip
       )
     )
     setDownload(false)
   }
 
   const TableColumnsHistorical = [
-      {
-        Header: 'Age',
-        accessor: 'age',
-      },
-      {
-        Header: 'SnapShot Date',
-        accessor: 'snapShotDate',
-      },
-      {
-        Header: 'All Comments',
-        Cell: previousComments,
-      },
-      {
-        Header: 'ACAT Account',
-        accessor: 'acatAccount',
-      },
-      {
-        Header: 'Account Number',
-        accessor: 'accountNumber',
-      },
-      {
-        Header: 'B/S',
-        accessor: 'buy_Sell',
-      },
-      {
-        Header: 'Cusip',
-        accessor: 'cusip',
-      },
-     
-      {
-        Header: 'Sec Nbr',
-        accessor: 'securityNumber',
-      },
-      
-      {
-        Header: 'Symbol',
-        accessor: 'nasdaqSymbol',
-      },
-  
-      {
-        Header: 'Qnty',
-        accessor: 'quantity',
-      },
-      {
-        Header: 'Partial Qnty',
-        accessor: 'partialQuantity',
-      },
-      {
-        Header: 'TradeDate',
-        accessor: 'tradeDate',
-      },
-      {
-        Header: 'SettleDate',
-        accessor: 'settleDate',
-      },
-      {
-        Header: 'Entry Date',
-        accessor: 'originationDate',
-      },
-      {
-        Header: 'Price',
-        accessor: 'price',
-      },
-      {
-        Header: 'Amount',
-        accessor: 'amount',
-      },
-      {
-        Header: 'Fail Code',
-        accessor: 'failConditionCode',
-      },
+    {
+      Header: 'Age',
+      accessor: 'age',
+    },
+    {
+      Header: 'SnapShot Date',
+      accessor: 'snapShotDate',
+    },
+    {
+      Header: 'All Comments',
+      Cell: previousComments,
+    },
+    {
+      Header: 'ACAT Account',
+      accessor: 'acatAccount',
+    },
+    {
+      Header: 'Account Number',
+      accessor: 'accountNumber',
+    },
+    {
+      Header: 'B/S',
+      accessor: 'buy_Sell',
+    },
+    {
+      Header: 'Cusip',
+      accessor: 'cusip',
+    },
+
+    {
+      Header: 'Sec Nbr',
+      accessor: 'securityNumber',
+    },
+
+    {
+      Header: 'Symbol',
+      accessor: 'nasdaqSymbol',
+    },
+
+    {
+      Header: 'Qnty',
+      accessor: 'quantity',
+    },
+    {
+      Header: 'Partial Qnty',
+      accessor: 'partialQuantity',
+    },
+    {
+      Header: 'TradeDate',
+      accessor: 'tradeDate',
+    },
+    {
+      Header: 'SettleDate',
+      accessor: 'settleDate',
+    },
+    {
+      Header: 'Entry Date',
+      accessor: 'originationDate',
+    },
+    {
+      Header: 'Price',
+      accessor: 'price',
+    },
+    {
+      Header: 'Amount',
+      accessor: 'amount',
+    },
+    {
+      Header: 'Fail Code',
+      accessor: 'failConditionCode',
+    },
   ]
 
   return (
@@ -355,31 +352,28 @@ const BetaFailAnalysisHistory = () => {
           <StyledSelectWrapper
             style={{ display: 'flex', justifyContent: 'flex-end' }}
           >
-            <div>
-              <Button
-                bgColor="#1F5EB7"
-                color="#FFFFFF"
-                height="35px"
-                width="80px"
-                onClick={() => {
-                  handleSearch(0)
-                }}
-                title="Search"
-              />
-            </div>
+            <Button
+              bgColor="#1F5EB7"
+              color="#FFFFFF"
+              height="35px"
+              width="80px"
+              onClick={() => {
+                handleSearch(0)
+              }}
+              title="Search"
+            />
             {buffering && <Primary24></Primary24>}
-            <div>
-              <Button
-                bgColor="#1F5EB7"
-                color="#FFFFFF"
-                height="35px"
-                width="80px"
-                onClick={() => {
-                  DownloadEXCEL()
-                }}
-                title="Download"
-              />
-            </div>
+
+            <Button
+              bgColor="#1F5EB7"
+              color="#FFFFFF"
+              height="35px"
+              width="80px"
+              onClick={() => {
+                DownloadEXCEL()
+              }}
+              title="Download"
+            />
             {download && <Primary24></Primary24>}
           </StyledSelectWrapper>
           {data.betaReport && action === 'search' && (
