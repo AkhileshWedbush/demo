@@ -214,11 +214,11 @@ const BetaFailAnalysisHistory = () => {
       accessor: 'partialQuantity',
     },
     {
-      Header: 'TradeDate',
+      Header: 'Trade Date',
       accessor: 'tradeDate',
     },
     {
-      Header: 'SettleDate',
+      Header: 'Settle Date',
       accessor: 'settleDate',
     },
     {
