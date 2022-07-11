@@ -15,8 +15,8 @@ const App: FC = () => {
     <Route index element={<LandingPage />} />
       <Route path="BetaFailTracking" element={<BetaFailDaily />} />
       <Route path="BetaFailTracking/history" element={<BetaFailHistory />} />
-      <Route path="/BetaFailTracking/comments" element={<UserComments />} />
     </Route>
+    <Route path="/BetaFailTracking/comments" element={<UserComments />} />
     <Route path="logOn" element={<LogOnPage />} />
     <Route path="*" element={<NoMatchPage />} />
   </Routes>

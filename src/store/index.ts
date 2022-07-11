@@ -1,7 +1,8 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 
-import { configureStore, Store ,combineReducers,} from '@reduxjs/toolkit';
+import { configureStore, Store ,combineReducers} from '@reduxjs/toolkit';
 import {failAnalysisReducer} from './failAnalysis'
-import {persistReducer,persistStore} from "redux-persist";
+import {persistReducer,persistStore,} from "redux-persist";
  import storage from "redux-persist/lib/storage";
  import betaFailAnalysisUser from './failAnalysis/beta-fail-analysis-user'
 
@@ -22,6 +23,9 @@ import {persistReducer,persistStore} from "redux-persist";
 
  const store:Store =configureStore({
   reducer: persistRoot,
+  middleware: (getDefaultMiddleware) => getDefaultMiddleware({
+    serializableCheck: false,
+  }),
  })
 
  export const persistor = persistStore(store)
