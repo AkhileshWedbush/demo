@@ -244,19 +244,9 @@ const BetaFailAnalysisDaily = () => {
       Header: 'All Comments',
       Cell: previousComments,
     },
-
     {
-      Header: 'AcatAccount',
+      Header: 'ACAT Account',
       accessor: 'acatAccount',
-    },
-    {
-      Header: 'ReceiveDeliverCode',
-      accessor: 'receiveDeliverCode',
-    },
-
-    {
-      Header: 'Branch',
-      accessor: 'branch',
     },
     {
       Header: 'Account Number',
@@ -270,21 +260,23 @@ const BetaFailAnalysisDaily = () => {
       Header: 'Cusip',
       accessor: 'cusip',
     },
+   
     {
-      Header: 'SecurityNumber',
+      Header: 'Sec Nbr',
       accessor: 'securityNumber',
     },
+    
     {
       Header: 'Symbol',
       accessor: 'nasdaqSymbol',
     },
 
     {
-      Header: 'Quantity',
+      Header: 'Qnty',
       accessor: 'quantity',
     },
     {
-      Header: 'PartialQuantity',
+      Header: 'Partial Qnty',
       accessor: 'partialQuantity',
     },
     {
@@ -300,25 +292,16 @@ const BetaFailAnalysisDaily = () => {
       accessor: 'originationDate',
     },
     {
-      Header: 'TRD_Price',
+      Header: 'Price',
       accessor: 'price',
     },
     {
-      Header: 'NET Amount',
+      Header: 'Amount',
       accessor: 'amount',
     },
     {
-      Header: 'FailConditionCode',
+      Header: 'Fail Code',
       accessor: 'failConditionCode',
-    },
-
-    {
-      Header: 'ID',
-      accessor: 'id',
-    },
-    {
-      Header: 'DTC ELIGIBILITY',
-      accessor: 'dtC_CNS_Eligibility',
     },
   ]
 
@@ -326,7 +309,7 @@ const BetaFailAnalysisDaily = () => {
     <>
       <RootContainer>
         <StyledPanelHead>
-          <StyledPanelHeadTitle>BETA FAIL ANALYSIS</StyledPanelHeadTitle>
+          <StyledPanelHeadTitle>Beta Fail Analysis</StyledPanelHeadTitle>
         </StyledPanelHead>
         <StyledPanelSelect>
           <StyledSelectWrapper>
@@ -484,7 +467,7 @@ const BetaFailAnalysisDaily = () => {
                         accessor: 'quantity',
                       },
                       {
-                        Header: 'SumAmount',
+                        Header: 'Amount',
                         accessor: 'sumAmount',
                       },
                     ]}

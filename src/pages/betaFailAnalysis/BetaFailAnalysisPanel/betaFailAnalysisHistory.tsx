@@ -169,109 +169,84 @@ const BetaFailAnalysisHistory = () => {
   }
 
   const TableColumnsHistorical = [
-    {
-      Header: 'Age',
-      accessor: 'age',
-    },
-    {
-      Header: 'SnapShot Date',
-      accessor: 'snapShotDate',
-    },
-    {
-      Header: 'All Comments',
-      Cell: previousComments,
-    },
-    {
-      Header: 'System',
-      accessor: 'system',
-    },
-
-    {
-      Header: 'AcatAccount',
-      accessor: 'acatAccount',
-    },
-    {
-      Header: 'ReceiveDeliverCode',
-      accessor: 'receiveDeliverCode',
-    },
-    {
-      Header: 'Subsidiary Number',
-      accessor: 'subsidiaryNumber',
-    },
-
-    {
-      Header: 'Branch',
-      accessor: 'branch',
-    },
-    {
-      Header: 'Account Number',
-      accessor: 'accountNumber',
-    },
-    {
-      Header: 'Buy/Sell',
-      accessor: 'buy_Sell',
-    },
-    {
-      Header: 'Cusip',
-      accessor: 'cusip',
-    },
-    {
-      Header: 'NasdaqSymbol',
-      accessor: 'nasdaqSymbol',
-    },
-    {
-      Header: 'SecurityNumber',
-      accessor: 'securityNumber',
-    },
-    {
-      Header: 'Quantity',
-      accessor: 'quantity',
-    },
-    {
-      Header: 'PartialQuantity',
-      accessor: 'partialQuantity',
-    },
-    {
-      Header: 'Amount',
-      accessor: 'amount',
-    },
-    {
-      Header: 'TradeDate',
-      accessor: 'tradeDate',
-    },
-    {
-      Header: 'SettleDate',
-      accessor: 'settleDate',
-    },
-    {
-      Header: 'OriginationDate',
-      accessor: 'originationDate',
-    },
-    {
-      Header: 'Price',
-      accessor: 'price',
-    },
-    {
-      Header: 'failConditionCode',
-      accessor: 'failConditionCode',
-    },
-    {
-      Header: 'dtC_CNS_Eligibility',
-      accessor: 'dtC_CNS_Eligibility',
-    },
-    {
-      Header: 'ID',
-      accessor: 'id',
-    },
+      {
+        Header: 'Age',
+        accessor: 'age',
+      },
+      {
+        Header: 'SnapShot Date',
+        accessor: 'snapShotDate',
+      },
+      {
+        Header: 'All Comments',
+        Cell: previousComments,
+      },
+      {
+        Header: 'ACAT Account',
+        accessor: 'acatAccount',
+      },
+      {
+        Header: 'Account Number',
+        accessor: 'accountNumber',
+      },
+      {
+        Header: 'B/S',
+        accessor: 'buy_Sell',
+      },
+      {
+        Header: 'Cusip',
+        accessor: 'cusip',
+      },
+     
+      {
+        Header: 'Sec Nbr',
+        accessor: 'securityNumber',
+      },
+      
+      {
+        Header: 'Symbol',
+        accessor: 'nasdaqSymbol',
+      },
+  
+      {
+        Header: 'Qnty',
+        accessor: 'quantity',
+      },
+      {
+        Header: 'Partial Qnty',
+        accessor: 'partialQuantity',
+      },
+      {
+        Header: 'TradeDate',
+        accessor: 'tradeDate',
+      },
+      {
+        Header: 'SettleDate',
+        accessor: 'settleDate',
+      },
+      {
+        Header: 'Entry Date',
+        accessor: 'originationDate',
+      },
+      {
+        Header: 'Price',
+        accessor: 'price',
+      },
+      {
+        Header: 'Amount',
+        accessor: 'amount',
+      },
+      {
+        Header: 'Fail Code',
+        accessor: 'failConditionCode',
+      },
   ]
 
   return (
     <>
       <RootContainer>
         <StyledPanelHead>
-          <StyledPanelHeadTitle>
-            <h3>BETA Fail Analysis</h3>
-          </StyledPanelHeadTitle>
+          <StyledPanelHeadTitle>Beta Fail Analysis</StyledPanelHeadTitle>
         </StyledPanelHead>
         <StyledPanelSelect>
           <StyledSelectWrapper>

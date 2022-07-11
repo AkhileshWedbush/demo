@@ -9,7 +9,6 @@ export const RootContainerTable = styled.div`
     /* background-color: green; */
 
     th {
-      white-space: nowrap;
       font-style: normal;
       font-weight: 700;
       font-size: 15px;
