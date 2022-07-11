@@ -1,3 +1,4 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
 /* eslint-disable @typescript-eslint/no-explicit-any */
@@ -26,23 +27,20 @@ import {
   isLoadingSelector,
   getAction,
   putUserComment,
+  getBetaEXCEL,
+  betaFailAnalysisDataSelector
 } from '../../../store/failAnalysis/beta-fail-analysis'
-import { betaFailAnalysisDataSelector } from '../../../store/failAnalysis/beta-fail-analysis'
 import { useSelector, useDispatch } from 'react-redux'
-import {
-  getComments,
-  commentSelector,
-} from '../../../store/failAnalysis/beta-fail-analysis-user'
+import { getComments } from '../../../store/failAnalysis/beta-fail-analysis-user'
 
 const BetaFailAnalysisDaily = () => {
   const dispatch = useDispatch()
-  const comment = useSelector(commentSelector)
   const navigation = useNavigate()
   const data = useSelector(betaFailAnalysisDataSelector)
   const buffering = useSelector(isLoadingSelector)
   const action = useSelector(actionSelector)
   const [inputComment, setInputComment] = useState<any>(userComment)
-  const [loading, setLoading] = useState<boolean>(false)
+  const [download, setDownload] = useState<boolean>(false)
   const [ageRange, setAgeRange] = useState<any>({
     value: '',
     label: '--Select--',
@@ -100,7 +98,11 @@ const BetaFailAnalysisDaily = () => {
     )
 
     if (status) {
-      window.open('/BetaFailTracking/comments')
+      window.open(
+        '/BetaFailTracking/comments',
+        'comment',
+        'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no'
+      )
     }
     console.log(status)
   }
@@ -206,6 +208,24 @@ const BetaFailAnalysisDaily = () => {
       )
     )
   }
+  const DownloadEXCEL = async () => {
+    setDownload(true)
+   await dispatch(
+      getBetaEXCEL(
+        `BETA_${type.value}_${new Date().toISOString().split('T')[0]}`,
+        type.value,
+        input.startDate,
+        input.endDate,
+        ageRange.value,
+        input.accountNumber,
+        input.branch,
+        input.subsidiaryNumber,
+        buySell.value,
+        input.cusip,
+      )
+    )
+    setDownload(false)
+  }
 
   const TableColumnsDaily = [
     {
@@ -226,21 +246,12 @@ const BetaFailAnalysisDaily = () => {
     },
 
     {
-      Header: 'System',
-      accessor: 'system',
-    },
-
-    {
       Header: 'AcatAccount',
       accessor: 'acatAccount',
     },
     {
       Header: 'ReceiveDeliverCode',
       accessor: 'receiveDeliverCode',
-    },
-    {
-      Header: 'Subsidiary Number',
-      accessor: 'subsidiaryNumber',
     },
 
     {
@@ -252,7 +263,7 @@ const BetaFailAnalysisDaily = () => {
       accessor: 'accountNumber',
     },
     {
-      Header: 'Buy/Sell',
+      Header: 'B/S',
       accessor: 'buy_Sell',
     },
     {
@@ -260,13 +271,14 @@ const BetaFailAnalysisDaily = () => {
       accessor: 'cusip',
     },
     {
-      Header: 'NasdaqSymbol',
-      accessor: 'nasdaqSymbol',
-    },
-    {
       Header: 'SecurityNumber',
       accessor: 'securityNumber',
     },
+    {
+      Header: 'Symbol',
+      accessor: 'nasdaqSymbol',
+    },
+
     {
       Header: 'Quantity',
       accessor: 'quantity',
@@ -274,10 +286,6 @@ const BetaFailAnalysisDaily = () => {
     {
       Header: 'PartialQuantity',
       accessor: 'partialQuantity',
-    },
-    {
-      Header: 'Amount',
-      accessor: 'amount',
     },
     {
       Header: 'TradeDate',
@@ -288,26 +296,30 @@ const BetaFailAnalysisDaily = () => {
       accessor: 'settleDate',
     },
     {
-      Header: 'OriginationDate',
+      Header: 'Entry Date',
       accessor: 'originationDate',
     },
     {
-      Header: 'Price',
+      Header: 'TRD_Price',
       accessor: 'price',
+    },
+    {
+      Header: 'NET Amount',
+      accessor: 'amount',
     },
     {
       Header: 'FailConditionCode',
       accessor: 'failConditionCode',
     },
-    {
-      Header: 'DtC_CNS_Eligibility',
-      accessor: 'dtC_CNS_Eligibility',
-    },
+
     {
       Header: 'ID',
       accessor: 'id',
     },
-
+    {
+      Header: 'DTC ELIGIBILITY',
+      accessor: 'dtC_CNS_Eligibility',
+    },
   ]
 
   return (
@@ -426,31 +438,30 @@ const BetaFailAnalysisDaily = () => {
           <StyledSelectWrapper
             style={{ display: 'flex', justifyContent: 'flex-end' }}
           >
-            <div>
-              <Button
-                bgColor="#1F5EB7"
-                color="#FFFFFF"
-                height="35px"
-                width="80px"
-                onClick={() => {
-                  handleSearch(0)
-                }}
-                title="Search"
-              />
-            </div>
+            <Button
+              bgColor="#1F5EB7"
+              color="#FFFFFF"
+              height="35px"
+              width="80px"
+              onClick={() => {
+                handleSearch(0)
+              }}
+              title="Search"
+            >
+            
+            </Button>
             {buffering && <Primary24></Primary24>}
-            <div>
-              <Button
-                bgColor="#1F5EB7"
-                color="#FFFFFF"
-                height="35px"
-                width="80px"
-                onClick={() => {
-                  null
-                }}
-                title="Download"
-              />
-            </div>
+            <Button
+              bgColor="#1F5EB7"
+              color="#FFFFFF"
+              height="35px"
+              width="80px"
+              onClick={() => {
+                DownloadEXCEL()
+              }}
+              title="Download"
+            />
+            {download && <Primary24></Primary24>}
           </StyledSelectWrapper>
 
           {action === 'search' && (

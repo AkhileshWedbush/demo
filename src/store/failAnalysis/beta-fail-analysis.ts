@@ -9,7 +9,6 @@ import { createSlice, Dispatch, PayloadAction, Slice } from '@reduxjs/toolkit'
 import { authApiCall } from '../../utils/api'
 
 interface State {
-  csv: string
   betaFailAnalysis: []
   selectedRow: []
   totalCount: number
@@ -22,7 +21,6 @@ let initialState: State = {
   selectedRow: [],
   totalCount: 0,
   isLoading: false,
-  csv: '',
   action: '',
 }
 
@@ -50,17 +48,10 @@ export const {
   setAction,
   SetBetaFailAnalysis,
   setIsLoading,
-  setReturnMailAndEmailReportCSV,
+  setBetaFailEXCEL,
   setSelectedRow,
 } = actions
 
-/**
- * getReturnMail
- * API - GET call to get beta new accounts report
- * @param {string} startDate
- * @param {string} endDate
- *  @param {string} action
- */
 export const getAction: any =
   (action: string) => async (dispatch: Dispatch) => {
     dispatch(setAction(action))
@@ -167,8 +158,9 @@ export const getBetaFailAnalysis: any =
       )
     }
   }
-export const getSelectedRow: any =
+export const getBetaEXCEL: any =
   (
+    fileName:string,
     report_Type: string,
     fromDate: string,
     toDate: string,
@@ -184,10 +176,10 @@ export const getSelectedRow: any =
     sortDirection: string = 'ASC',
     searchFilter: string = ''
   ) =>
-  async (dispatch: Dispatch) => {
+  async () => {
     try {
       const { data, status } = await authApiCall.post(
-        'opsfailprocessapi/FailAnalysisReport/GetBetaFailAnalysisReport',
+        'opsfailprocessapi/FailAnalysisReport/GetBetaFailAnalysisExcelReport',
         {
           report_Type,
           fromDate,
@@ -203,18 +195,20 @@ export const getSelectedRow: any =
           sortBy,
           sortDirection,
           searchFilter,
-        }
+        },
+        { responseType: 'blob' }
       )
 
       if (status === 200) {
-        dispatch(
-          setSelectedRow({
-            data: data,
-          })
-        )
+        const url = window.URL.createObjectURL(new Blob([data]))
+        const link = document.createElement('a')
+        link.href = url
+        link.setAttribute('download', `${fileName}.xlsx`)
+        document.body.appendChild(link)
+        link.click()
       }
     } catch (e: any) {
-      console.log('null')
+      //console.log('null')
     }
   }
 

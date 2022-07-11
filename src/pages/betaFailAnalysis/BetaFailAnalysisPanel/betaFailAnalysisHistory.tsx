@@ -23,6 +23,7 @@ import {
   getBetaFailAnalysis,
   isLoadingSelector,
   getAction,
+  getBetaEXCEL,
 } from '../../../store/failAnalysis/beta-fail-analysis'
 import { betaFailAnalysisDataSelector } from '../../../store/failAnalysis/beta-fail-analysis'
 import { useSelector, useDispatch } from 'react-redux'
@@ -35,7 +36,7 @@ const BetaFailAnalysisHistory = () => {
   const data = useSelector(betaFailAnalysisDataSelector)
   const buffering = useSelector(isLoadingSelector)
   const action = useSelector(actionSelector)
-  const [click, setClick] = useState<string>('one')
+  const [download, setDownload] = useState<boolean>(false)
   const [ageRange, setAgeRange] = useState<any>({
     value: '',
     label: '--Select--',
@@ -147,6 +148,24 @@ const BetaFailAnalysisHistory = () => {
         updatedPage
       )
     )
+  }
+  const DownloadEXCEL = async () => {
+    setDownload(true)
+    await dispatch(
+      getBetaEXCEL(
+        `BETA_${type.value}_${new Date().toISOString().split('T')[0]}`,
+        type.value,
+        input.startDate,
+        input.endDate,
+        ageRange.value,
+        input.accountNumber,
+        input.branch,
+        input.subsidiaryNumber,
+        buySell.value,
+        input.cusip,
+      )
+    )
+    setDownload(false)
   }
 
   const TableColumnsHistorical = [
@@ -381,11 +400,12 @@ const BetaFailAnalysisHistory = () => {
                 height="35px"
                 width="80px"
                 onClick={() => {
-                  null
+                  DownloadEXCEL()
                 }}
                 title="Download"
               />
             </div>
+            {download && <Primary24></Primary24>}
           </StyledSelectWrapper>
           {data.betaReport && action === 'search' && (
             <StyledTableContainer>
