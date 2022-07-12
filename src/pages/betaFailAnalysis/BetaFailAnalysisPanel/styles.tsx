@@ -143,9 +143,8 @@ export const PopUpStyle = styled.div`
   -o-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-
   overflow: auto;
-  padding: 20px 28px 20px 28px;
+  padding: 18px 26px 18px 26px;
   display: flex;
   flex-direction: column;
   box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);

@@ -407,7 +407,7 @@ const BetaFailAnalysisHistory = () => {
             />
             {download && <Primary24></Primary24>}
           </StyledSelectWrapper>
-          <div>
+          {  action === 'search' &&  <div>
             <Label color={'black'} label={'Items per Page'}></Label>
             <Select
               options={RowRangeoption}
@@ -418,7 +418,7 @@ const BetaFailAnalysisHistory = () => {
                {action === 'search' &&  ItemPerPage() }}}
               
             />
-          </div>
+          </div>}
           {data.betaReport && action === 'search' && (
             <StyledTableContainer>
                {openComments && (
@@ -470,7 +470,7 @@ const BetaFailAnalysisHistory = () => {
           )}
         </StyledPanelSelect>
       </RootContainer>
-      <StyledSelectWrapper>
+      <StyledSelectWrapper >
         {input.pageNumber === 0 ? (
           <Button
             bgColor="#A7AFBC"

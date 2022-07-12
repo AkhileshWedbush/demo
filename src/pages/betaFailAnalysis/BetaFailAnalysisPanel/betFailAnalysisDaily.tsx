@@ -35,6 +35,7 @@ import {
 } from '../../../store/failAnalysis/beta-fail-analysis'
 import { useSelector, useDispatch } from 'react-redux'
 import { getComments } from '../../../store/failAnalysis/beta-fail-analysis'
+import { RootContainerTable } from './table/styles'
 
 const BetaFailAnalysisDaily = () => {
   const dispatch = useDispatch()
@@ -142,16 +143,15 @@ const BetaFailAnalysisDaily = () => {
     return (
       <>
         <div>
-          <Textbox
+          <input
             onChange={(e: any) => {
               inputComment[tb.cell.row.id].comments = e.target.value
               setInputComment(inputComment)
             }}
-          ></Textbox>
+          ></input>
         </div>
         <div
           style={{
-            paddingTop: '3px',
             display: 'flex',
             justifyContent: 'flex-end',
           }}
@@ -159,8 +159,8 @@ const BetaFailAnalysisDaily = () => {
           <Button
             bgColor="#1F5EB7"
             color="#FFFFFF"
-            height="25px"
-            width="60px"
+            height="18px"
+            width="50px"
             onClick={() => {
               // console.log(table[tb.cell.row.id].comments)
               newUserComment(
@@ -480,48 +480,95 @@ const BetaFailAnalysisDaily = () => {
               </StyledPanelHead>
               <div style={{ width: '100%' }}>
                 <StyledTableContainer>
-                  <BetaTable
-                    data={data && data.betaSummary ? data.betaSummary : []}
-                    columns={[
-                      {
-                        Header: 'Age Description',
-                        accessor: 'ageDescription',
-                      },
-                      {
-                        Header: 'Quantity',
-                        accessor: 'quantity',
-                      },
-                      {
-                        Header: 'Amount',
-                        accessor: 'sumAmount',
-                      },
-                    ]}
-                  />
-                  <br></br>
-                  <h5>Total Quantity: {data.vSum_Quantity}</h5>
-                  <h5>Total Amount: $ {data.vSum_SumAmount}</h5>
+                  <RootContainerTable>
+                    <table>
+                      <thead>
+                        <tr>
+                          <th>Age Description</th>
+                          <th>Quantity</th>
+                          <th>Amount</th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data.betaSummary &&
+                          data.betaSummary.map((element: any, index: any) => {
+                            return (
+                              <tr key={index}>
+                                <td>{element.ageDescription}</td>
+                                <td>{element.quantity}</td>
+                                <td>
+                                  ${' '}
+                                  {element.sumAmount
+                                    .toFixed(2)
+                                    .replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+                                </td>
+                              </tr>
+                            )
+                          })}
+                      </tbody>
+                    </table>
+                  </RootContainerTable>
+
+                  <div
+                    style={{
+                      display: 'flex',
+                      justifyContent: 'row',
+                      paddingTop: '20px',
+                    }}
+                  >
+                    {data.vSum_Quantity && (
+                      <h4 style={{ paddingRight: '75px' }}>
+                        Total Quantity: {data.vSum_Quantity}
+                      </h4>
+                    )}
+                    {data.vSum_SumAmount && (
+                      <h4>
+                        Total Amount: ${' '}
+                        {data.vSum_SumAmount
+                          .toFixed(2)
+                          .replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+                      </h4>
+                    )}
+                  </div>
                 </StyledTableContainer>
               </div>
             </CardContainer>
           )}
-          <div>
-            <Label color={'black'} label={'Items per Page'}></Label>
-            <Select
-              options={RowRangeoption}
-              value={rowRange}
-              onChange={(e: any) => {
-                rowRange = e
-                SetRowRange({ ...rowRange })
-               {action === 'search' &&  ItemPerPage() }
-              }}
-            />
-          </div>
+          {action === 'search' && (
+            <div>
+              <Label color={'black'} label={'Items per Page'}></Label>
+              <Select
+                options={RowRangeoption}
+                value={rowRange}
+                onChange={(e: any) => {
+                  rowRange = e
+                  SetRowRange({ ...rowRange })
+                  {
+                    action === 'search' && ItemPerPage()
+                  }
+                }}
+              />
+            </div>
+          )}
           {data.betaReport && action === 'search' && (
             <>
               <StyledTableContainer>
                 {openComments && (
                   <PopUpStyle>
-                    <h4>Comments</h4>
+                    <div
+                      style={{ display: 'flex', justifyContent: 'flex-end' }}
+                    >
+                      <Button
+                        bgColor="#d0d7e2"
+                        color="#000"
+                        height="25px"
+                        width="25px"
+                        onClick={() => {
+                          setOpenComments(false)
+                        }}
+                        title="X"
+                      />{' '}
+                    </div>
                     <StyledTableContainer>
                       <BetaTable
                         data={comments}
@@ -546,20 +593,6 @@ const BetaFailAnalysisDaily = () => {
                         ]}
                       />
                     </StyledTableContainer>
-                    <div
-                      style={{ display: 'flex', justifyContent: 'flex-end' }}
-                    >
-                      <Button
-                        bgColor="#1F5EB7"
-                        color="#FFFFFF"
-                        height="35px"
-                        width="80px"
-                        onClick={() => {
-                          setOpenComments(false)
-                        }}
-                        title="Close"
-                      />{' '}
-                    </div>
                   </PopUpStyle>
                 )}
                 <BetaTable data={data.betaReport} columns={TableColumnsDaily} />
