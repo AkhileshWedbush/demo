@@ -1,3 +1,4 @@
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-unused-vars */
 /* eslint-disable jsx-a11y/no-static-element-interactions */
 /* eslint-disable jsx-a11y/click-events-have-key-events */
@@ -10,6 +11,7 @@ import {
   StyledTableContainer,
   StyledPanelSelect,
   StyledSelectWrapper,
+  PopUpStyle,
 } from './styles'
 import { Primary24 } from '../../../components/spinner/Spinner.stories'
 import './table/dropdown.css'
@@ -29,18 +31,21 @@ import {
   putUserComment,
   getBetaEXCEL,
   betaFailAnalysisDataSelector,
+  commentSelector,
 } from '../../../store/failAnalysis/beta-fail-analysis'
 import { useSelector, useDispatch } from 'react-redux'
-import { getComments } from '../../../store/failAnalysis/beta-fail-analysis-user'
+import { getComments } from '../../../store/failAnalysis/beta-fail-analysis'
 
 const BetaFailAnalysisDaily = () => {
   const dispatch = useDispatch()
   const navigation = useNavigate()
+  const comments = useSelector(commentSelector)
   const data = useSelector(betaFailAnalysisDataSelector)
   const buffering = useSelector(isLoadingSelector)
   const action = useSelector(actionSelector)
   const [inputComment, setInputComment] = useState<any>(userComment)
   const [download, setDownload] = useState<boolean>(false)
+  const [openComments, setOpenComments] = useState<boolean>(false)
   const [ageRange, setAgeRange] = useState<any>({
     value: '',
     label: '--Select--',
@@ -53,6 +58,7 @@ const BetaFailAnalysisDaily = () => {
     value: 'daily',
     label: 'Daily',
   })
+  let [rowRange, SetRowRange] = useState<any>({ value: 10, label: '10' })
   const emptyInput = {
     commentDate: new Date().toISOString(),
     startDate: new Date().toISOString().split('T')[0],
@@ -89,22 +95,23 @@ const BetaFailAnalysisDaily = () => {
     { value: 'S', label: 'Sell' },
     { value: 'B', label: 'Buy' },
   ]
-  //console.log( inputComment[0].comments)
+  const RowRangeoption: any = [
+    { value: 10, label: '10' },
+    { value: 20, label: '20' },
+    { value: 30, label: '30' },
+    { value: 40, label: '40' },
+    { value: 50, label: '50' },
+  ]
+  //console.log(rowRange.value)
 
   const savedComments = async (tb: any) => {
     console.log('coming')
-    const status = await dispatch(
+
+    await dispatch(
       getComments(type.value, data.betaReport[tb.cell.row.id].failUniqueId)
     )
-
-    if (status) {
-      window.open(
-        '/BetaFailTracking/comments',
-        'comment',
-        'toolbar=no, location=no, directories=no, status=no, menubar=no, scrollbars=no, resizable=no, copyhistory=no'
-      )
-    }
-    console.log(status)
+    // console.log(comments)
+    setOpenComments(true)
   }
 
   const previousComments = (tb: any) => {
@@ -186,7 +193,8 @@ const BetaFailAnalysisDaily = () => {
         input.subsidiaryNumber,
         buySell.value,
         input.cusip,
-        firstPage
+        firstPage,
+        rowRange.value
       )
     )
   }
@@ -204,7 +212,27 @@ const BetaFailAnalysisDaily = () => {
         input.subsidiaryNumber,
         buySell.value,
         input.cusip,
-        updatedPage
+        updatedPage,
+        rowRange.value
+      )
+    )
+  }
+  const ItemPerPage = async () => {
+    setInput({ ...input, pageNumber: 0 })
+    await dispatch(
+      getBetaFailAnalysis(
+        'search',
+        type.value,
+        input.startDate,
+        input.endDate,
+        ageRange.value,
+        input.accountNumber,
+        input.branch,
+        input.subsidiaryNumber,
+        buySell.value,
+        input.cusip,
+        0,
+        rowRange.value
       )
     )
   }
@@ -220,8 +248,7 @@ const BetaFailAnalysisDaily = () => {
         input.accountNumber,
         input.branch,
         input.subsidiaryNumber,
-        buySell.value,
-        input.cusip
+        buySell.value
       )
     )
     setDownload(false)
@@ -477,10 +504,67 @@ const BetaFailAnalysisDaily = () => {
               </div>
             </CardContainer>
           )}
+          <div>
+            <Label color={'black'} label={'Items per Page'}></Label>
+            <Select
+              options={RowRangeoption}
+              value={rowRange}
+              onChange={(e: any) => {
+                rowRange = e
+                SetRowRange({ ...rowRange })
+               {action === 'search' &&  ItemPerPage() }
+              }}
+            />
+          </div>
           {data.betaReport && action === 'search' && (
-            <StyledTableContainer>
-              <BetaTable data={data.betaReport} columns={TableColumnsDaily} />
-            </StyledTableContainer>
+            <>
+              <StyledTableContainer>
+                {openComments && (
+                  <PopUpStyle>
+                    <h4>Comments</h4>
+                    <StyledTableContainer>
+                      <BetaTable
+                        data={comments}
+                        columns={[
+                          {
+                            Header: 'FailUniqueId',
+                            accessor: 'failUniqueId',
+                          },
+
+                          {
+                            Header: 'Comment',
+                            accessor: 'comment',
+                          },
+                          {
+                            Header: 'CreatedBy',
+                            accessor: 'createdBy',
+                          },
+                          {
+                            Header: 'CreatedOn',
+                            accessor: 'createdOn',
+                          },
+                        ]}
+                      />
+                    </StyledTableContainer>
+                    <div
+                      style={{ display: 'flex', justifyContent: 'flex-end' }}
+                    >
+                      <Button
+                        bgColor="#1F5EB7"
+                        color="#FFFFFF"
+                        height="35px"
+                        width="80px"
+                        onClick={() => {
+                          setOpenComments(false)
+                        }}
+                        title="Close"
+                      />{' '}
+                    </div>
+                  </PopUpStyle>
+                )}
+                <BetaTable data={data.betaReport} columns={TableColumnsDaily} />
+              </StyledTableContainer>
+            </>
           )}
         </StyledPanelSelect>
       </RootContainer>
