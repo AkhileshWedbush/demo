@@ -96,8 +96,8 @@ export const StyledSelectWrapper = styled.div`
 `
 
 export const StyledTableContainer = styled.div`
-margin-top: 10px;
-margin-bottom: 10px;
+  margin-top: 10px;
+  margin-bottom: 10px;
   width: 100%;
   padding: 24px;
   background: #fcfdff;
@@ -135,8 +135,8 @@ export const CardContainer = styled.div`
   }
 `
 export const PopUpStyle = styled.div`
-background: #f0f2f5;
-position: fixed;
+  background: #d0d7e2;
+  position: fixed;
   top: 50%;
   left: 55%;
   -moz-transform: translate(-50%, -50%);
@@ -144,10 +144,10 @@ position: fixed;
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
 
-overflow: auto;
-padding: 20px 28px 20px 28px;
-display: flex;
-flex-direction: column;
-box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);
-border-radius: 8px;
+  overflow: auto;
+  padding: 20px 28px 20px 28px;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);
+  border-radius: 8px;
 `
