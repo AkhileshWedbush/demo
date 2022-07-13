@@ -137,13 +137,13 @@ export const CardContainer = styled.div`
 export const PopUpStyle = styled.div`
   background: #d0d7e2;
   position: fixed;
+  height:55%;
   top: 50%;
   left: 55%;
   -moz-transform: translate(-50%, -50%);
   -o-transform: translate(-50%, -50%);
   -webkit-transform: translate(-50%, -50%);
   transform: translate(-50%, -50%);
-  overflow: auto;
   padding: 10px 15px 10px 15px;
   display: flex;
   flex-direction: column;
