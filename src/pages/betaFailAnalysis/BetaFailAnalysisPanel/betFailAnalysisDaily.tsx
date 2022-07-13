@@ -11,9 +11,13 @@ import {
   StyledTableContainer,
   StyledPanelSelect,
   StyledSelectWrapper,
-  PopUpStyle,
+  PopUpStyleContent,
+  PopUpStyleLoader,
 } from './styles'
-import { Primary24 } from '../../../components/spinner/Spinner.stories'
+import {
+  Primary24,
+  Primary40,
+} from '../../../components/spinner/Spinner.stories'
 import './table/dropdown.css'
 import { Link, useNavigate } from 'react-router-dom'
 import { useState } from 'react'
@@ -47,6 +51,7 @@ const BetaFailAnalysisDaily = () => {
   const [inputComment, setInputComment] = useState<any>(userComment)
   const [download, setDownload] = useState<boolean>(false)
   const [openComments, setOpenComments] = useState<boolean>(false)
+  const [popUpLoader, setPopUpLoader] = useState<boolean>(false)
   const [ageRange, setAgeRange] = useState<any>({
     value: '',
     label: '--Select--',
@@ -107,11 +112,13 @@ const BetaFailAnalysisDaily = () => {
 
   const savedComments = async (tb: any) => {
     console.log('coming')
+    setPopUpLoader(true)
 
     await dispatch(
       getComments(type.value, data.betaReport[tb.cell.row.id].failUniqueId)
     )
     // console.log(comments)
+    setPopUpLoader(false)
     setOpenComments(true)
   }
 
@@ -131,12 +138,14 @@ const BetaFailAnalysisDaily = () => {
     user: string,
     rowId: number
   ) => {
+    setPopUpLoader(true)
     await dispatch(
       putUserComment(type, failId, comment, user, input.commentDate)
     )
     inputComment[rowId].comments = ''
     console.log(inputComment[rowId].comments)
     setInputComment([...inputComment])
+    setPopUpLoader(false)
   }
 
   const addNotes = (tb: any) => {
@@ -505,31 +514,34 @@ const BetaFailAnalysisDaily = () => {
                               </tr>
                             )
                           })}
+                        <tr>
+                          {data.vSum_SumAmount && (
+                            <>
+                              <td>
+                                <h4
+                                  style={{
+                                    display: 'flex',
+                                    justifyContent: 'flex-end',
+                                  }}
+                                >
+                                  Total Quantity:
+                                </h4>
+                              </td>
+                              <td>
+                                <h4>{data.vSum_Quantity}</h4>
+                              </td>
+                              <td>
+                                Total Amount: ${' '}
+                                {data.vSum_SumAmount
+                                  .toFixed(2)
+                                  .replace(/\d(?=(\d{3})+\.)/g, '$&,')}
+                              </td>
+                            </>
+                          )}
+                        </tr>
                       </tbody>
                     </table>
                   </RootContainerTable>
-
-                  <div
-                    style={{
-                      display: 'flex',
-                      justifyContent: 'row',
-                      paddingTop: '20px',
-                    }}
-                  >
-                    {data.vSum_Quantity && (
-                      <h4 style={{ paddingRight: '60px' }}>
-                        Total Quantity: {data.vSum_Quantity}
-                      </h4>
-                    )}
-                    {data.vSum_SumAmount && (
-                      <h4>
-                        Total Amount: ${' '}
-                        {data.vSum_SumAmount
-                          .toFixed(2)
-                          .replace(/\d(?=(\d{3})+\.)/g, '$&,')}
-                      </h4>
-                    )}
-                  </div>
                 </StyledTableContainer>
               </div>
             </CardContainer>
@@ -553,8 +565,14 @@ const BetaFailAnalysisDaily = () => {
           {data.betaReport && action === 'search' && (
             <>
               <StyledTableContainer>
+                {popUpLoader && (
+                  <PopUpStyleLoader>
+                    <div>Please Wait...</div>
+                    <Primary40></Primary40>
+                  </PopUpStyleLoader>
+                )}
                 {openComments && (
-                  <PopUpStyle>
+                  <PopUpStyleContent>
                     <div
                       style={{ display: 'flex', justifyContent: 'flex-end' }}
                     >
@@ -592,10 +610,9 @@ const BetaFailAnalysisDaily = () => {
                           },
                         ]}
                       />
-                     
                     </StyledTableContainer>
-                    {comments.length == 0 && <h4>No Comments</h4>}
-                  </PopUpStyle>
+                    {comments.length == 0 && <h3>No Comments</h3>}
+                  </PopUpStyleContent>
                 )}
                 <BetaTable data={data.betaReport} columns={TableColumnsDaily} />
               </StyledTableContainer>

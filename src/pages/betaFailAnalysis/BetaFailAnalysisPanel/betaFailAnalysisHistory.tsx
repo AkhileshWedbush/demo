@@ -10,9 +10,13 @@ import {
   StyledTableContainer,
   StyledPanelSelect,
   StyledSelectWrapper,
-  PopUpStyle,
+  PopUpStyleContent,
+  PopUpStyleLoader,
 } from './styles'
-import { Primary24 } from '../../../components/spinner/Spinner.stories'
+import {
+  Primary24,
+  Primary40,
+} from '../../../components/spinner/Spinner.stories'
 import './table/dropdown.css'
 import { useState } from 'react'
 import Select from 'react-select'
@@ -42,6 +46,7 @@ const BetaFailAnalysisHistory = () => {
   const action = useSelector(actionSelector)
   const [download, setDownload] = useState<boolean>(false)
   const [openComments, setOpenComments] = useState<boolean>(false)
+  const [popUpLoader, setPopUpLoader] = useState<boolean>(false)
   let [rowRange, SetRowRange] = useState<any>({ value: 10, label: '10' })
   const [ageRange, setAgeRange] = useState<any>({
     value: '',
@@ -101,11 +106,13 @@ const BetaFailAnalysisHistory = () => {
   //console.log( inputComment[0].comments)
 
   const savedComments = async (tb: any) => {
-    console.log('coming')
+    //console.log('coming')
+    setPopUpLoader(true)
     await dispatch(
       getComments(type.value, data.betaReport[tb.cell.row.id].failUniqueId)
     )
-   // console.log(comments)
+    // console.log(comments)
+    setPopUpLoader(false)
     setOpenComments(true)
   }
 
@@ -407,61 +414,71 @@ const BetaFailAnalysisHistory = () => {
             />
             {download && <Primary24></Primary24>}
           </StyledSelectWrapper>
-          {  action === 'search' &&  <div>
-            <Label color={'black'} label={'Items per Page'}></Label>
-            <Select
-              options={RowRangeoption}
-              value={rowRange}
-              onChange={(e: any) => {
-                rowRange = e
-                SetRowRange({ ...rowRange })
-               {action === 'search' &&  ItemPerPage() }}}
-              
-            />
-          </div>}
+          {action === 'search' && (
+            <div>
+              <Label color={'black'} label={'Items per Page'}></Label>
+              <Select
+                options={RowRangeoption}
+                value={rowRange}
+                onChange={(e: any) => {
+                  rowRange = e
+                  SetRowRange({ ...rowRange })
+                  {
+                    action === 'search' && ItemPerPage()
+                  }
+                }}
+              />
+            </div>
+          )}
           {data.betaReport && action === 'search' && (
             <StyledTableContainer>
-               {openComments && (
-                  <PopUpStyle>
-                    <h4>Comments</h4>
-                    <StyledTableContainer>
-                      <BetaTable
-                        data={comments}
-                        columns={[
-                          {
-                            Header: 'FailUniqueId',
-                            accessor: 'failUniqueId',
-                          },
+              {popUpLoader && (
+                <PopUpStyleLoader>
+                  <div>Please Wait...</div>
+                  <Primary40></Primary40>
+                </PopUpStyleLoader>
+              )}
+              {openComments && (
+                <PopUpStyleContent>
+                  <div style={{ display: 'flex', justifyContent: 'flex-end' }}>
+                    <Button
+                      bgColor="#d0d7e2"
+                      color="#000"
+                      height="25px"
+                      width="25px"
+                      onClick={() => {
+                        setOpenComments(false)
+                      }}
+                      title="X"
+                    />{' '}
+                  </div>
+                  <StyledTableContainer>
+                    <BetaTable
+                      data={comments}
+                      columns={[
+                        {
+                          Header: 'FailUniqueId',
+                          accessor: 'failUniqueId',
+                        },
 
-                          {
-                            Header: 'Comment',
-                            accessor: 'comment',
-                          },
-                          {
-                            Header: 'CreatedBy',
-                            accessor: 'createdBy',
-                          },
-                          {
-                            Header: 'CreatedOn',
-                            accessor: 'createdOn',
-                          },
-                        ]}
-                      />
-                    </StyledTableContainer>
-                    <div style={{  display: 'flex',justifyContent: 'flex-end' }}>
-                      <Button
-                        bgColor="#1F5EB7"
-                        color="#FFFFFF"
-                        height="35px"
-                        width="80px"
-                        onClick={() => {
-                          setOpenComments(false)
-                        }}
-                        title="Close"
-                      />{' '}
-                    </div>
-                  </PopUpStyle>
-                )}
+                        {
+                          Header: 'Comment',
+                          accessor: 'comment',
+                        },
+                        {
+                          Header: 'CreatedBy',
+                          accessor: 'createdBy',
+                        },
+                        {
+                          Header: 'CreatedOn',
+                          accessor: 'createdOn',
+                        },
+                      ]}
+                    />
+                  </StyledTableContainer>
+                  {comments.length == 0 && <h3>No Comments</h3>}
+                </PopUpStyleContent>
+              )}
               <BetaTable
                 data={data.betaReport}
                 columns={TableColumnsHistorical}
@@ -470,7 +487,7 @@ const BetaFailAnalysisHistory = () => {
           )}
         </StyledPanelSelect>
       </RootContainer>
-      <StyledSelectWrapper >
+      <StyledSelectWrapper>
         {input.pageNumber === 0 ? (
           <Button
             bgColor="#A7AFBC"

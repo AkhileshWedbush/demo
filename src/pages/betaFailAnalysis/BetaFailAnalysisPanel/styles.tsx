@@ -134,10 +134,11 @@ export const CardContainer = styled.div`
     line-height: 24px;
   }
 `
-export const PopUpStyle = styled.div`
+export const PopUpStyleContent = styled.div`
   background: #d0d7e2;
   position: fixed;
-  height:55%;
+  height: 55%;
+  width: 60%;
   top: 50%;
   left: 55%;
   -moz-transform: translate(-50%, -50%);
@@ -146,6 +147,25 @@ export const PopUpStyle = styled.div`
   transform: translate(-50%, -50%);
   padding: 10px 15px 10px 15px;
   display: flex;
+  flex-direction: column;
+  box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);
+  border-radius: 8px;
+`
+export const PopUpStyleLoader = styled.div`
+  background: #f0f2f5;
+  position: fixed;
+  height: 15%;
+  width: 10%;
+  top: 50%;
+  left: 55%;
+  -moz-transform: translate(-50%, -50%);
+  -o-transform: translate(-50%, -50%);
+  -webkit-transform: translate(-50%, -50%);
+  transform: translate(-50%, -50%);
+  padding: 10px 15px 10px 15px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
   box-shadow: 0px 8px 16px -8px rgba(0, 36, 93, 0.3);
   border-radius: 8px;
