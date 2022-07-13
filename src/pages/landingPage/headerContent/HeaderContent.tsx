@@ -34,7 +34,9 @@ const HeaderContent = (Props: HeaderContentProps) => {
     <RootContainer>
       <PageHeadingWrapper>
         <StyledToggleControl>
-        <h2>OPERATION HUB</h2>
+          <div  style={{ display: 'flex', justifyContent: 'inlineBlock' }}>
+        <img src={Icons.WedbushLogoOnlySmall} alt=''></img>
+        <h2  style={{ padding:'5px 0 0 5px'}}>OPERATION HUB</h2></div>
           <StyledSliderToggle onClick={Props.toggleMenuHandler}>
             {isSideMenuOpen ? (
               <img src={Icons.ChevronLeft} alt="toggle" />
