@@ -517,7 +517,7 @@ const BetaFailAnalysisDaily = () => {
                     }}
                   >
                     {data.vSum_Quantity && (
-                      <h4 style={{ paddingRight: '75px' }}>
+                      <h4 style={{ paddingRight: '60px' }}>
                         Total Quantity: {data.vSum_Quantity}
                       </h4>
                     )}
@@ -592,7 +592,9 @@ const BetaFailAnalysisDaily = () => {
                           },
                         ]}
                       />
+                     
                     </StyledTableContainer>
+                    {comments.length == 0 && <h4>No Comments</h4>}
                   </PopUpStyle>
                 )}
                 <BetaTable data={data.betaReport} columns={TableColumnsDaily} />
