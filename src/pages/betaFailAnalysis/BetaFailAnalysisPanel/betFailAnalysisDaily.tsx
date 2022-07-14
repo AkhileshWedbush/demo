@@ -111,7 +111,7 @@ const BetaFailAnalysisDaily = () => {
   //console.log(rowRange.value)
 
   const savedComments = async (tb: any) => {
-    console.log('coming')
+    // console.log('coming')
     setPopUpLoader(true)
 
     await dispatch(

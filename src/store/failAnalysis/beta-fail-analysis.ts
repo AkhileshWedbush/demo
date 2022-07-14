@@ -1,10 +1,7 @@
 /* eslint-disable @typescript-eslint/no-inferrable-types */
-
+/* eslint-disable prefer-const */
 /* eslint-disable @typescript-eslint/no-explicit-any */
 import { StoreState } from '../index'
-
-/* eslint-disable prefer-const */
-
 import { createSlice, Dispatch, PayloadAction, Slice } from '@reduxjs/toolkit'
 import { authApiCall } from '../../utils/api'
 
@@ -44,8 +41,6 @@ const { actions, reducer }: Slice = createSlice({
       state.action = action.payload
     },
     setComments: (state: State, action: PayloadAction<any>) => {
-      // console.log('hellow')
-      // console.log(action.payload.data)
       state.comments = action.payload.data
     },
   },
@@ -57,7 +52,7 @@ export const {
   setIsLoading,
   setBetaFailEXCEL,
   setSelectedRow,
-  setComments
+  setComments,
 } = actions
 
 export const getAction: any =
@@ -78,7 +73,6 @@ export const putUserComment: any =
     createdOn: string
   ) =>
   async () => {
-    console.log('test1')
     try {
       const { data, status } = await authApiCall.post(
         'opsfailprocessapi/FailAnalysisReport/AddComment',
@@ -95,7 +89,6 @@ export const putUserComment: any =
         return data
       }
     } catch {
-      //console.log(null)
       return []
     }
   }
@@ -113,7 +106,7 @@ export const getBetaFailAnalysis: any =
     buySell: string,
     cusip: string,
     pageNumber: number,
-    pageSize: number ,
+    pageSize: number,
     sortBy: string = 'SnapShotDate, Age',
     sortDirection: string = 'ASC',
     searchFilter: string = ''
@@ -157,7 +150,6 @@ export const getBetaFailAnalysis: any =
         return data
       }
     } catch (e: any) {
-      console.log('null')
       dispatch(setIsLoading(false))
       dispatch(
         SetBetaFailAnalysis({
@@ -166,10 +158,8 @@ export const getBetaFailAnalysis: any =
       )
     }
   }
-  export const getComments: any =
+export const getComments: any =
   (system: string, failUniqueId: string) => async (dispatch: Dispatch) => {
-    console.log('test1')
-
     try {
       const { data, status } = await authApiCall.post(
         `opsfailprocessapi/FailAnalysisReport/GetComments?system=${system}&failUniqueId=${failUniqueId}`
@@ -189,14 +179,11 @@ export const getBetaFailAnalysis: any =
           data: [],
         })
       )
-    
-      return null
-      //console.log(null)
     }
   }
 export const getBetaEXCEL: any =
   (
-    fileName:string,
+    fileName: string,
     report_Type: string,
     fromDate: string,
     toDate: string,
@@ -244,7 +231,7 @@ export const getBetaEXCEL: any =
         link.click()
       }
     } catch (e: any) {
-      //console.log('null')
+      null
     }
   }
 
@@ -258,6 +245,6 @@ export const errorSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.error
 export const isLoadingSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.isLoading
-  export const commentSelector = (store: StoreState) =>
+export const commentSelector = (store: StoreState) =>
   store.failAnalysis.betafailanalysis.comments
 export default reducer
